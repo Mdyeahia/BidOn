@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BidOn.Data
 {
-    class BidOnContext:DbContext
+    public class BidOnContext:DbContext
     {
         public BidOnContext() : base("BidOnConnection")
         {
