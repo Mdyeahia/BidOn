@@ -1,42 +1,12 @@
-﻿@model List<BidOn.Entities.Auction>
-@{
-    ViewBag.Title = "Index";
-}
+﻿<div>
+    <div id="tableContainer">
+        @{
+            Html.RenderAction("AuctionsTable");
+        }
+    </div>
 
-<h2>Index</h2>
+    <hr />
+    <div id="contentArea">
 
-<table>
-    <thead>
-        <tr>
-            <td>Title</td>
-            <br />
-            <td>Description</td>
-            <br />
-            <td>ActualAmount</td>
-            <br />
-            <td>StartingTime</td>
-            <br />
-            <td>EndTime</td>
-        </tr>
-       
-    </thead>
-    <tbody>
-        
-            @foreach (var auction in Model)
-            {
-                <tr>
-                    <td>@auction.Title</td>
-                    
-                    <td>@auction.Description</td>
-                    
-                    <td>@auction.ActualAmount</td>
-                    
-                    <td>@auction.StartingTime</td>
-                    
-                    <td>@auction.EndTime</td>
-                    
-                    
-                </tr>
-            }
-    </tbody>
-</table>
+    </div>
+</div>

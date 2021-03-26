@@ -45,5 +45,14 @@ namespace BidOn.Service
             context.SaveChanges();
 
         }
+        public void DeleteAuction(int Id)
+        {
+            BidOnContext context = new BidOnContext();
+            var deleteAuction = context.Auctions.Find(Id);
+
+            context.Entry(deleteAuction).State = EntityState.Deleted;
+            context.SaveChanges();
+
+        }
     }
 }

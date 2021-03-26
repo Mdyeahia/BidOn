@@ -1,11 +1,7 @@
 ﻿
-@{
-    ViewBag.Title = "Create";
-}
-
 <h2>Create</h2>
 
-<form method="post">
+<form id="CreateTable">
     <input type="hidden" name="Id" />
 
     <label>Title</label>
@@ -23,7 +19,29 @@
     <label>EndTime</label>
     <input name="EndTime" />
     <br />
-    <button >Save</button>
+    <button id="AuctionSaveBtn" type="button">Save</button>
 
 
 </form>
+
+<script>
+    $("#AuctionSaveBtn").click(function () {
+        $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Create", "Auctions")',
+                data: $('#CreateTable').serialize()
+
+            })
+
+            .done(function (response) {
+            
+                $("#tableContainer").html(response);
+                $("#contentArea").html('');
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+
+
+    });
+</script>

@@ -2,6 +2,7 @@
 using BidOn.Service;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,17 +14,27 @@ namespace BidOn.Web.Controllers
         // GET: Auctions
         public ActionResult Index()
         {
+            
+            
+
+            return View();
+        }
+        // GET: Auctions
+        public ActionResult AuctionsTable()
+        {
             AuctionsService service = new AuctionsService();
             var auctions = service.GetAllAuction();
 
-            return View(auctions);
+
+            return PartialView(auctions);
         }
 
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            return PartialView();
         }
+
         [HttpPost]
         public ActionResult Create(Auction auction)
         {
@@ -31,7 +42,7 @@ namespace BidOn.Web.Controllers
 
             service.SaveAuction(auction);
 
-            return View();
+            return RedirectToAction("AuctionsTable");
         }
         [HttpGet]
         public ActionResult Edit(int Id)
@@ -39,7 +50,7 @@ namespace BidOn.Web.Controllers
             AuctionsService service = new AuctionsService();
             var auction=service.GetAuctionById(Id);
 
-            return View(auction);
+            return PartialView(auction);
         }
         [HttpPost]
         public ActionResult Edit(Auction auction)
@@ -48,7 +59,18 @@ namespace BidOn.Web.Controllers
 
             service.UpdateAuction(auction);
 
-            return View(auction);
+            return RedirectToAction("AuctionsTable");
         }
+
+        
+        [HttpPost]
+        public ActionResult Delete(int Id)
+        {
+            AuctionsService service = new AuctionsService();
+            service.DeleteAuction(Id);
+
+            return RedirectToAction("AuctionsTable");
+        }
+        
     }
 }
