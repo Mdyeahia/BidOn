@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BidOn.Web.ViewModels;
 
 namespace BidOn.Web.Controllers
 {
@@ -14,19 +15,23 @@ namespace BidOn.Web.Controllers
         // GET: Auctions
         public ActionResult Index()
         {
-            
-            
+            AuctionListingViewModel model = new AuctionListingViewModel();
+            model.PageTitle = "AuctionsTable";
+            model.PageDescription = "List of Auctions";
 
-            return View();
+            return View(model);
         }
         // GET: Auctions
         public ActionResult AuctionsTable()
         {
-            AuctionsService service = new AuctionsService();
-            var auctions = service.GetAllAuction();
+            AuctionListingViewModel model = new AuctionListingViewModel();
+
+           
+
+            model.AllAuctions = AuctionsService.Instance.GetAllAuction();
 
 
-            return PartialView(auctions);
+            return PartialView(model);
         }
 
         [HttpGet]
@@ -38,26 +43,24 @@ namespace BidOn.Web.Controllers
         [HttpPost]
         public ActionResult Create(Auction auction)
         {
-            AuctionsService service = new AuctionsService();
-
-            service.SaveAuction(auction);
+            AuctionsService.Instance.SaveAuction(auction);
 
             return RedirectToAction("AuctionsTable");
         }
         [HttpGet]
         public ActionResult Edit(int Id)
         {
-            AuctionsService service = new AuctionsService();
-            var auction=service.GetAuctionById(Id);
+            
+            var auction= AuctionsService.Instance.GetAuctionById(Id);
 
             return PartialView(auction);
         }
         [HttpPost]
         public ActionResult Edit(Auction auction)
         {
-            AuctionsService service = new AuctionsService();
 
-            service.UpdateAuction(auction);
+
+            AuctionsService.Instance.UpdateAuction(auction);
 
             return RedirectToAction("AuctionsTable");
         }
@@ -66,10 +69,22 @@ namespace BidOn.Web.Controllers
         [HttpPost]
         public ActionResult Delete(int Id)
         {
-            AuctionsService service = new AuctionsService();
-            service.DeleteAuction(Id);
+
+            AuctionsService.Instance.DeleteAuction(Id);
 
             return RedirectToAction("AuctionsTable");
+        }
+
+        public ActionResult Details(int Id)
+        {
+            AuctionsViewModel model = new AuctionsViewModel();
+
+            model.PageTitle = "Details";
+            model.PageDescription ="Auction details";
+
+            model.Auction= AuctionsService.Instance.GetAuctionById(Id);
+
+            return View(model);
         }
         
     }

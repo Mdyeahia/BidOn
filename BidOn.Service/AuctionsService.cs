@@ -9,8 +9,27 @@ using System.Threading.Tasks;
 
 namespace BidOn.Service
 {
+   
     public class AuctionsService
     {
+        #region Singleton
+        public static AuctionsService Instance
+        {
+            get
+            {
+                if (instance == null) instance = new AuctionsService();
+
+                return instance;
+            }
+        }
+        private static AuctionsService instance { get; set; }
+
+        private AuctionsService()
+        {
+        }
+
+        #endregion
+
         public Auction GetAuctionById(int Id)
         {
             BidOnContext context = new BidOnContext();
@@ -19,10 +38,18 @@ namespace BidOn.Service
             return context.Auctions.Find(Id);
 
         }
+       
         public List<Auction> GetAllAuction()
         {
             BidOnContext context = new BidOnContext();
             return context.Auctions.ToList();
+
+        }
+        public List<Auction> GetPromotedAuctions()
+        {
+            BidOnContext context = new BidOnContext();
+
+            return context.Auctions.Take(4).ToList();
 
         }
 

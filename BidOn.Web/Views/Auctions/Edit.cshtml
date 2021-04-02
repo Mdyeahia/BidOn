@@ -1,28 +1,43 @@
 ﻿@model BidOn.Entities.Auction
 
-<h2>Edit</h2>
-
-
+<div class="modal-header">
+    <h5 class="modal-title">Edit Auction</h5>
+</div>
 <form id="UpdateTable">
-    <input type="hidden" name="Id" value="@Model.Id" />
+    <div class="modal-body">
+        <input type="hidden" name="Id" value="@Model.Id" />
 
-    <label>Title</label>
-    <input name="Title" value="@Model.Title" />
-    <br />
-    <label>Description</label>
-    <input name="Description" value="@Model.Description" />
-    <br />
-    <label>ActualAmount</label>
-    <input name="ActualAmount" value="@Model.ActualAmount" />
-    <br />
-    <label>StartingTime</label>
-    <input name="StartingTime" value="@Model.StartingTime" />
-    <br />
-    <label>EndTime</label>
-    <input name="EndTime" value="@Model.EndTime" />
-    <br />
-    <button type="button"id="UpdateBtn">Update</button>
+        <div class="form-group">
+            <label>Title</label>
+            <input class="form-control" name="Title" value="@Model.Title" />
 
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input class="form-control" name="Description" value="@Model.Description" />
+
+        </div>
+        <div class="form-group">
+            <label>ActualAmount</label>
+            <input class="form-control" name="ActualAmount" value="@Model.ActualAmount" />
+
+        </div>
+        <div class="form-group">
+            <label>StartingTime</label>
+            <input class="form-control" name="StartingTime" value="@Model.StartingTime" />
+
+        </div>
+        <div class="form-group">
+            <label>EndTime</label>
+            <input class="form-control" name="EndTime" value="@Model.EndTime" />
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="UpdateBtn" class="btn btn-success">Update</button>
+        <button type="button" id="cancelBtn" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+    </div>
 
 </form>
 <script>
@@ -36,13 +51,19 @@
             .done(function (response) {
 
                 $("#tableContainer").html(response);
-                $("#contentArea").html('');
+                $('#FormModel').modal('hide');
+                //$("#contentArea").html('');
+                
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("FAIL");
             });
 
 
+    });
+    $("#cancelBtn").click(function () {
+        $("#actionContainer").html("");
+        focusAction("tableContainer");
     });
 
 </script>

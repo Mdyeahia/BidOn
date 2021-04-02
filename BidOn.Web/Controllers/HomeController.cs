@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BidOn.Service;
+using BidOn.Web.ViewModels;
 
 namespace BidOn.Web.Controllers
 {
@@ -10,7 +12,15 @@ namespace BidOn.Web.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            AuctionsViewModel model = new AuctionsViewModel();
+
+            model.PageTitle = "HomePage";
+            model.PageDescription = "This is HomePage";
+
+            model.AllAuctions = AuctionsService.Instance.GetAllAuction();
+            model.PromotedAuctions = AuctionsService.Instance.GetPromotedAuctions();
+
+            return View(model);
         }
 
         public ActionResult About()
