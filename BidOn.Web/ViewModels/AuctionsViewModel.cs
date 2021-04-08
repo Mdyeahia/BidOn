@@ -22,5 +22,17 @@ namespace BidOn.Web.ViewModels
         public Auction Auction { get; set; }
     }
 
+    public class CreateAuctionViewModel : PageViewModel
+    {
+        public string Title { get; set; }
+
+        public string Description { get; set; }
+        public decimal ActualAmount { get; set; }
+        public DateTime StartingTime { get; set; }
+        public DateTime EndTime { get; set; }
+
+        public string AuctionPictures { get; set; }
+    }
+
     
 }

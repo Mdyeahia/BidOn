@@ -54,6 +54,10 @@
     <Compile Include="Migrations\202103221526198_EnitityAdded.Designer.cs">
       <DependentUpon>202103221526198_EnitityAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104061636191_AddedPictureDB.cs" />
+    <Compile Include="Migrations\202104061636191_AddedPictureDB.Designer.cs">
+      <DependentUpon>202104061636191_AddedPictureDB.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -70,6 +74,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202103221526198_EnitityAdded.resx">
       <DependentUpon>202103221526198_EnitityAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104061636191_AddedPictureDB.resx">
+      <DependentUpon>202104061636191_AddedPictureDB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

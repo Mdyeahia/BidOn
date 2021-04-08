@@ -41,8 +41,21 @@ namespace BidOn.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Auction auction)
+        public ActionResult Create(CreateAuctionViewModel model)
         {
+            Auction auction = new Auction();
+
+            auction.Title = model.Title;
+            auction.Description = model.Description;
+            auction.ActualAmount = model.ActualAmount;
+            auction.StartingTime = model.StartingTime;
+            auction.EndTime = model.EndTime;
+
+            var pictureIds = model.AuctionPictures.Split(new char[] {','},StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+            auction.AuctionPictures = new List<AuctionPicture>();
+            auction.AuctionPictures.AddRange(pictureIds.Select(x=>new AuctionPicture() { PictureId = x }).ToList());
+
+
             AuctionsService.Instance.SaveAuction(auction);
 
             return RedirectToAction("AuctionsTable");
