@@ -55,7 +55,6 @@ namespace BidOn.Web.Controllers
             auction.AuctionPictures = new List<AuctionPicture>();
             auction.AuctionPictures.AddRange(pictureIds.Select(x=>new AuctionPicture() { PictureId = x }).ToList());
 
-
             AuctionsService.Instance.SaveAuction(auction);
 
             return RedirectToAction("AuctionsTable");

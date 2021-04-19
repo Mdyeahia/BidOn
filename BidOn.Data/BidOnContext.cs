@@ -18,6 +18,8 @@ namespace BidOn.Data
         public DbSet<AuctionPicture> AuctionPictures { get; set; }
         public DbSet<Picture> Pictures { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
 
     }
 }

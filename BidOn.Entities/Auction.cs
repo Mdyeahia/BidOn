@@ -16,6 +16,9 @@ namespace BidOn.Entities
         public DateTime StartingTime { get; set; }
         public DateTime EndTime { get; set; }
 
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
+
         public List<AuctionPicture> AuctionPictures { get; set; }
     }
 }

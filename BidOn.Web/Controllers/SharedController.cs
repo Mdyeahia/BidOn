@@ -29,6 +29,7 @@ namespace BidOn.Web.Controllers
                 var picUrl = "~/Content/images/" + fileName;
                 picture.SaveAs(path);//into images  file
 
+                //into DB
                 var newPic = new Picture();
                 newPic.Url = fileName;
                 int picId = SharedService.Instance.SavePicture(newPic);

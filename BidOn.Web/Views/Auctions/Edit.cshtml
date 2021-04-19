@@ -3,7 +3,7 @@
 <div class="modal-header">
     <h5 class="modal-title">Edit Auction</h5>
 </div>
-<form id="UpdateTable"style="overflow: auto">
+<form id="UpdateTable" style="overflow: auto">
     <div class="modal-body">
         <input type="hidden" name="Id" value="@Model.Id" />
 
@@ -32,13 +32,19 @@
             <input class="form-control" name="EndTime" value="@Model.EndTime" />
 
         </div>
+        <div class="preview-images-zone">
+            <div class="preview-image preview-show-1">
+                <div class="image-cancel" data-no="1">x</div>
+                <div class="image-zone"><img id="pro-img-1" src="https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA5Ny85NTkvb3JpZ2luYWwvc2h1dHRlcnN0b2NrXzYzOTcxNjY1LmpwZw=="></div>
+                <div class="tools-edit-image"><a href="javascript:void(0)" data-no="1" class="btn btn-light btn-edit-image">edit</a></div>
+            </div>
 
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="UpdateBtn" class="btn btn-success">Update</button>
+            <button type="button" id="cancelBtn" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+        </div>
     </div>
-    <div class="modal-footer">
-        <button type="button" id="UpdateBtn" class="btn btn-success">Update</button>
-        <button type="button" id="cancelBtn" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-    </div>
-
 </form>
 <script>
     $("#UpdateBtn").click(function () {
@@ -53,7 +59,7 @@
                 $("#tableContainer").html(response);
                 $('#FormModel').modal('hide');
                 //$("#contentArea").html('');
-                
+
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("FAIL");
