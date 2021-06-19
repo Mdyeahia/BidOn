@@ -1,0 +1,26 @@
+﻿<div>
+    <div id="CategorytableContainer">
+        @{
+            Html.RenderAction("CategoryTable");
+        }
+    </div>
+    <hr />
+    @*<div id="contentArea">
+
+        </div>*@
+    <div class="modal fade" id="CategoryFormModel" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content" id="CategorycontentArea">
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<script>
+    function focusAction(controlToFocus) {
+        $('html, body').animate({
+            scrollTop: $("#" + controlToFocus).offset().top - 100
+        }, 1000);
+    }
+</script>

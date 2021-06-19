@@ -1,0 +1,141 @@
+﻿@model BidOn.Web.ViewModels.CategoryCreateViewModel
+<div class="modal-header">
+    <h5 class="modal-title">Edit Category</h5>
+</div>
+<form id="UpdateTable" style="overflow: auto">
+    <div class="modal-body">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <div class="form-group">
+            <label>Title</label>
+            <input class="form-control" name="Title" value="@Model.Auction.Title" />
+        </div>
+
+        <div class="form-group">
+            <label for="Category">Category</label>
+            <select class="form-group" name="CategoryId">
+                @foreach (var category in Model.Categories)
+                {
+                    var selected = category.Id == Model.Auction.CategoryId ? "selected" : string.Empty;
+                    <option @selected value="@category.Id">@category.Name</option>
+                }
+
+
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <input class="form-control" name="Description" value="@Model.Auction.Description" />
+        </div>
+        <div class="form-group">
+            <label>ActualAmount</label>
+            <input class="form-control" name="ActualAmount" value="@Model.Auction.ActualAmount" />
+        </div>
+        <div class="form-group">
+            <label>StartingTime</label>
+            <input class="form-control" name="StartingTime" value="@Model.Auction.StartingTime" />
+        </div>
+        <div class="form-group">
+            <label>EndTime</label>
+            <input class="form-control" name="EndTime" value="@Model.Auction.EndTime" />
+        </div>
+
+
+        <div class="form-group">
+            <label for="uploadAuctionPic" class="btn btn-warning" style="cursor:pointer">Update Pictures</label>
+            <input id="uploadAuctionPic" class="form-control" name="AuctionPictures" type="file" style="display:none" multiple="multiple" />
+            <input type="hidden" id="pictureIds" name="AuctionPictures" />
+            <div id="picsArea">
+                @if (Model.Auction.AuctionPictures != null && Model.Auction.AuctionPictures.Count > 0)
+                {
+                    foreach (var picture in Model.Auction.AuctionPictures)
+                    {
+                        <img src="~/Content/images/@picture.Picture.Url" class="image img-thumbnail mt-2" data-id="@picture.PictureId" />
+                    }
+                }
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+            <button type="button" id="UpdateBtn" class="btn btn-success">Update</button>
+            <button type="button" id="cancelBtn" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+        </div>
+    </div>
+</form>
+<script>
+    RemoveImageOnClick();
+    $("#UpdateBtn").click(function () {
+
+        var picIds = [];
+
+        $("#picsArea .image").each(function () {
+            var picId = $(this).attr("data-id");
+
+            picIds.push(picId);
+        });
+
+        $("#pictureIds").val(picIds);
+        $.ajax({
+
+            type: 'POST',
+            url: '@Url.Action("Edit", "Auctions")',
+            data: $("#UpdateTable").serialize()
+
+        })
+            .done(function (response) {
+
+                $("#tableContainer").html(response);
+                $('#FormModel').modal('hide');
+                //$("#contentArea").html('');
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+
+
+    });
+    $("#uploadAuctionPic").change(function () {
+        var pictures = this.files;
+        var picsLength = pictures.length;
+        if (picsLength > 5) {
+            alert("Please,Upload 5 Photo not more than that!");
+            picsLength = 5;
+        }
+        var picsData = new FormData();
+        for (var i = 0; i < picsLength; i++) {
+            picsData.append("picture", pictures[i]);
+        }
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UploadPictures", "Shared")',
+            data: picsData,
+            dataType: "json",
+            processData: false,
+            contentType: false
+        })
+            .done(function (responses) {
+
+
+
+                for (var i = 0; i < responses.length; i++) {
+                    var picResponse = responses[i];
+                    AttachNewImage(picResponse.id, picResponse.url);
+
+                }
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+    });
+
+
+    $("#cancelBtn").click(function () {
+        $("#actionContainer").html("");
+        focusAction("tableContainer");
+    });
+
+</script>
+

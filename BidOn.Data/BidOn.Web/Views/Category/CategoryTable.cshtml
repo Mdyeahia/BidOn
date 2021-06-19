@@ -1,0 +1,148 @@
+﻿@model BidOn.Web.ViewModels.CategoryLisingtViewModel
+@{
+    ViewBag.Title = "CategoryTable";
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+
+<div id="CategoryListingTable">
+    <br />
+    <button type="button" id="CreateCategoryBtn" class="btn btn-dark" data-toggle="modal" data-target="CategoryFormModel">Add Category</button>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Name</td>
+
+                <td>Description</td>
+
+                <td>Auctions</td>
+
+                <td>Action</td>
+            </tr>
+
+        </thead>
+        <tbody>
+            @if (Model.AllCategory != null && Model.AllCategory.Count > 0)
+            {
+                foreach (var category in Model.AllCategory)
+                {
+                    <tr>
+                        <td><a href="@Url.Action("Details","Category",new {Id=category.Id})">@category.Name</a></td>
+
+                        <td>@category.Description</td>
+
+                        @if (category.Auctions != null && category.Auctions.Count() > 0)
+                    {
+                            <td><a href="@Url.Action("Index","Auctions", new { categoryId = category.Id })">@category.Auctions.Count()</a></td>
+                        }
+                        else
+                        {
+                            <td>0</td>
+                        }
+
+                        <td>
+                            <button type="button" class="DeleteBtn btn btn-danger" data-id="@category.Id">Delete</button>
+
+
+                            <button type="button" class="EditBtn btn btn-primary" data-id="@category.Id" data-toggle="modal" data-target="FormModel">Edit</button>
+                        </td>
+
+
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center alert alert-danger">
+                        No categories found.
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+<div id="CategorypicTemplate" style="display:none">
+    <img src="" class="image img-thumbnail mt-2" data-id="" />
+
+</div>
+
+<script>
+
+    $("#CreateCategoryBtn").click(function () {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Create", "Category")'
+
+        })
+            .done(function (response) {
+
+                $('#CategoryFormModel').modal('toggle');
+                $("#CategorycontentArea").html(response);
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+
+
+    });
+    $(".DeleteBtn").click(function () {
+        swal({
+            title: "Confirm?",
+            text: "Are you sure you want to delete this Auction?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "Post",
+                        url: "@Url.Action("Delete", "Category")",
+                        data: {
+                            Id: $(this).attr('data-id')
+                        }
+                    })
+                        .done(function (response) {
+
+                            $("#CategorytableContainer").html(response);
+                            focusAction("CategorycontentArea");
+                        })
+                        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("FAIL");
+                        });
+                }
+            });
+    });
+
+    $(".EditBtn").click(function () {
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("Edit", "Category")",
+            data: { Id: $(this).attr('data-id') }
+
+        })
+            .done(function (response) {
+
+                $('#CategoryFormModel').modal('toggle');
+                $("#CategorycontentArea").html(response);
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+
+
+    });
+
+    $("#cancelBtn").click(function () {
+        $("#actionContainer").html("");
+        focusAction("tableContainer");
+    });
+
+
+
+</script>
+
