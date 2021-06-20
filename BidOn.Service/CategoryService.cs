@@ -45,6 +45,30 @@ namespace BidOn.Service
             return context.Categories.Include(c=>c.Auctions).ToList();
         }
 
+        public List<Category>FilterCategory(string searchTerm, int pageNo, int pageSize)
+        {
+            BidOnContext context = new BidOnContext();
+            var category = context.Categories.Include(c=>c.Auctions).AsQueryable();
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                category = category.Where(c => c.Name.ToLower().Contains(searchTerm.ToLower()));
+            }
+            int skipCount = pageSize * ( pageNo - 1);
+            return category.OrderByDescending(c => c.Id).Skip(skipCount).Take(pageSize).ToList();
+        }
+
+        public int totalCategoryCount(string searchTerm)
+        {
+            BidOnContext context = new BidOnContext();
+            var category = context.Categories.Include(c => c.Auctions).AsQueryable();
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                category = category.Where(c => c.Name.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            return category.Count();
+        }
+
         public void SaveCategory(Category category)
         {
             BidOnContext context = new BidOnContext();

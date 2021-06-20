@@ -10,6 +10,8 @@ namespace BidOn.Web.ViewModels
     {
         public List<Category> AllCategory { get; set; }
         public List<Action> AllAuction { get; set; }
+        public string SearchTerm { get; set; }
+        public Pager Pager { get; set; }
     }
     public class CategoryCreateViewModel : PageViewModel
     {

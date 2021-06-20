@@ -3,65 +3,85 @@
     ViewBag.Title = "CategoryTable";
 }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-3">
+                <h1>Categories</h1>
+                <br />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-lg-12">
+                <form id="CategoryControlForm">
+                    <div class="input-group">
+                        <input type="text" id="searchTxt" name="search" class="form-control mr-1" placeholder="Search by Name..." value="@Model.SearchTerm">
+                        <div class="input-group-append" id="button-addon4">
+                            <button id="searchBtn" class="btn btn-outline-primary mr-1" type="button">Search</button>
+                            <button id="resetBtn" class="btn btn-outline-secondary mr-1" type="button">Reset</button>
+                            <button type="button" id="CreateCategoryBtn" class="btn btn-dark" data-toggle="modal" data-target="CategoryFormModel">New</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="CategoryListingTable">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td>Name</td>
 
-<div id="CategoryListingTable">
-    <br />
-    <button type="button" id="CreateCategoryBtn" class="btn btn-dark" data-toggle="modal" data-target="CategoryFormModel">Add Category</button>
+                        <td>Description</td>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <td>Name</td>
+                        <td>Auctions</td>
 
-                <td>Description</td>
+                        <td>Action</td>
+                    </tr>
 
-                <td>Auctions</td>
-
-                <td>Action</td>
-            </tr>
-
-        </thead>
-        <tbody>
-            @if (Model.AllCategory != null && Model.AllCategory.Count > 0)
+                </thead>
+                <tbody>
+                    @if (Model.AllCategory != null && Model.AllCategory.Count > 0)
             {
                 foreach (var category in Model.AllCategory)
                 {
-                    <tr>
-                        <td><a href="@Url.Action("Details","Category",new {Id=category.Id})">@category.Name</a></td>
+                            <tr>
+                                <td><a href="@Url.Action("Details","Category",new {Id=category.Id})">@category.Name</a></td>
 
-                        <td>@category.Description</td>
+                                <td>@category.Description</td>
 
-                        @if (category.Auctions != null && category.Auctions.Count() > 0)
+                                @if (category.Auctions != null && category.Auctions.Count() > 0)
                     {
-                            <td><a href="@Url.Action("Index","Auctions", new { categoryId = category.Id })">@category.Auctions.Count()</a></td>
+                                    <td><a href="@Url.Action("Index","Auctions", new { categoryId = category.Id })">@category.Auctions.Count()</a></td>
+                                }
+                                else
+                                {
+                                    <td>0</td>
+                                }
+
+                                <td>
+                                    <button type="button" class="DeleteBtn btn btn-danger" data-id="@category.Id">Delete</button>
+
+
+                                    <button type="button" class="EditBtn btn btn-primary" data-id="@category.Id" data-toggle="modal" data-target="FormModel">Edit</button>
+                                </td>
+
+
+                            </tr>
                         }
-                        else
-                        {
-                            <td>0</td>
-                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center alert alert-danger">
+                                No categories found.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
-                        <td>
-                            <button type="button" class="DeleteBtn btn btn-danger" data-id="@category.Id">Delete</button>
-
-
-                            <button type="button" class="EditBtn btn btn-primary" data-id="@category.Id" data-toggle="modal" data-target="FormModel">Edit</button>
-                        </td>
-
-
-                    </tr>
-                }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="4" class="text-center alert alert-danger">
-                        No categories found.
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
+        </div>
+    </div>
 </div>
 <div id="CategorypicTemplate" style="display:none">
     <img src="" class="image img-thumbnail mt-2" data-id="" />
@@ -80,6 +100,43 @@
 
                 $('#CategoryFormModel').modal('toggle');
                 $("#CategorycontentArea").html(response);
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+
+
+    });
+    $("#searchBtn").click(function () {
+        $.ajax({
+            url: '@Url.Action("CategoryTable", "Category")',
+            data: {
+                search:$("#searchTxt").val()}
+
+        })
+            .done(function (response) {
+
+                $("#CategorytableContainer").html(response);
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+
+
+    });
+    $("#resetBtn").click(function () {
+        $.ajax({
+            url: '@Url.Action("CategoryTable", "Category")',
+            data: {
+                search:""
+            }
+
+        })
+            .done(function (response) {
+
+                $("#CategorytableContainer").html(response);
 
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {

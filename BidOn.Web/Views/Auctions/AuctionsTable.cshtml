@@ -18,7 +18,7 @@
             <div class="col col-lg-12">
                 <form id="AuctionControlForm">
                     <div class="input-group">
-                        @if (Model.AllAuctions != null && Model.AllAuctions.Count() > 0)
+                        @if (Model.Categories != null && Model.Categories.Count() > 0)
                         {
                             <select class="form-control mr-1" name="categoryId" id="selectCategory">
                                 <option value="0" disabled selected>
@@ -27,12 +27,13 @@
                                 @foreach (var category in Model.Categories)
                                 {
                                     var selected = category.Id == categoryId ? "selected" : string.Empty;
-                                    <option value="@category.Id" @selected>
-                                        @category.Name
-                                    </option>
+                                <option value="@category.Id" @selected>
+                                    @category.Name
+                                </option>
                                 }
                             </select>
                         }
+
                         <input type="text" id="searchTxt" name="search" class="form-control mr-1" placeholder="Search by title..." value="@Model.SearchTerm">
                         <div class="input-group-append" id="button-addon4">
                             <button id="searchBtn" class="btn btn-outline-primary mr-1" type="button">Search</button>
@@ -64,28 +65,39 @@
 
                 </thead>
                 <tbody>
+                    @if (Model.AllAuctions != null && Model.AllAuctions.Count > 0)
+                    {
+                        foreach (var auction in Model.AllAuctions)
+                        {
+                            <tr>
+                                <td>@auction.Title</td>
 
-                    @foreach (var auction in Model.AllAuctions)
+                                <td>@auction.Description</td>
+
+                                <td>@auction.ActualAmount</td>
+
+                                <td>@auction.StartingTime</td>
+
+                                <td>@auction.EndTime</td>
+
+                                <td>
+                                    <button type="button" class="DeleteBtn btn btn-danger" data-id="@auction.Id">Delete</button>
+
+
+                                    <button type="button" class="EditBtn btn btn-primary" data-id="@auction.Id" data-toggle="modal" data-target="FormModel">Edit</button>
+                                </td>
+
+
+                            </tr>
+                        }
+
+                    }
+                    else
                     {
                         <tr>
-                            <td>@auction.Title</td>
-
-                            <td>@auction.Description</td>
-
-                            <td>@auction.ActualAmount</td>
-
-                            <td>@auction.StartingTime</td>
-
-                            <td>@auction.EndTime</td>
-
-                            <td>
-                                <button type="button" class="DeleteBtn btn btn-danger" data-id="@auction.Id">Delete</button>
-
-
-                                <button type="button" class="EditBtn btn btn-primary" data-id="@auction.Id" data-toggle="modal" data-target="FormModel">Edit</button>
+                            <td colspan="12" class="text-center alert alert-danger">
+                                No Auction found!!!.
                             </td>
-
-
                         </tr>
                     }
                 </tbody>
@@ -104,7 +116,7 @@
         $.ajax({
             url: '@Url.Action("AuctionsTable", "Auctions")',
             data: {
-                
+
                 categoryId: $("#selectCategory").val()
             }
 
@@ -112,7 +124,7 @@
             .done(function (response) {
 
                 $("#tableContainer").html(response);
-                
+
 
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
@@ -148,7 +160,7 @@
             url: '@Url.Action("AuctionsTable", "Auctions")',
             data: {
 
-                search:"",
+                search: "",
             }
 
         })

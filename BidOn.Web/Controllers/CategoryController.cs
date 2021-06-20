@@ -21,15 +21,18 @@ namespace BidOn.Web.Controllers
             return View(model);
         }
         // GET: Auctions
-        public ActionResult CategoryTable()
+        public PartialViewResult CategoryTable(string search,int? pageNo)
         {
             CategoryLisingtViewModel model = new CategoryLisingtViewModel();
+            var pageSize = 10;
+            pageNo = pageNo ?? 1;
 
+            model.SearchTerm = search;
+            model.AllCategory = CategoryService.Instance.FilterCategory(search, pageNo.Value,pageSize);
+            var totalCategory = CategoryService.Instance.totalCategoryCount(search);
 
-
-            model.AllCategory = CategoryService.Instance.AllCategories();
-
-
+            model.Pager = new Pager(totalCategory, pageNo, pageSize);
+            
             return PartialView(model);
         }
         [HttpGet]
