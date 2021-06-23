@@ -4,44 +4,51 @@
 </div>
 <form id="CreateTable" style="overflow: auto">
     <div class="modal-body">
-        <input type="hidden" name="Id" />
+        
 
         <div class="form-group">
             <label for="Title">Title</label>
-            <input type="text"class="form-control" name="Title"id="Title"value="@Model.Title" />
+            <input type="text" class="form-control" name="Title" id="Title" value="@Model.Title" />
         </div>
 
-         <div class="form-group">
-                <label for="">Category</label>
-             <select class="form-group" name="categoryId">
-                 @foreach (var category in Model.Categories)
-                 {
-                     <option value="@category.Id">@category.Name</option>
-                 }
-             </select>
-            </div>
-                 
+        <div class="form-group">
+            <label for="">Category</label>
+            <select class="form-group" name="categoryId">
+                @foreach (var category in Model.Categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select>
+        </div>
+
         <div class="form-group">
             <label for="Description">Description</label>
-            <input type="text" class="form-control" name="Description"id="Description"value="@Model.Description" />
+            <input type="text" class="form-control" name="Description" id="Description" value="@Model.Description" />
         </div>
         <div class="form-group">
             <label for="ActualAmount">ActualAmount</label>
-            <input type="text" class="form-control" name="ActualAmount"id="ActualAmount"value="@Model.ActualAmount" />
+            <input type="text" class="form-control" name="ActualAmount" id="ActualAmount" value="@Model.ActualAmount" />
         </div>
         <div class="form-group">
             <label for="StartingTime">StartingTime</label>
-            <input type="date" class="form-control" name="StartingTime"id="StartingTime"value="@Model.StartingTime" />
+            <input type="date" class="form-control" name="StartingTime" id="StartingTime" value="@Model.StartingTime"readonly />
         </div>
         <div class="form-group">
             <label for="EndTime">EndTime</label>
-            <input type="date" class="form-control" name="EndTime"id="EndTime"value="" />
+            <input type="date" class="form-control" name="EndTime" id="EndTime" value=""readonly />
         </div>
         <div class="form-group">
-            <label for="uploadAuctionPic" class="btn btn-warning" style="cursor:pointer">Add Pictures</label>
+            <label for="uploadAuctionPic" class="btn btn-warning" style="cursor:pointer">
+                Add Pictures
+                <span id="picLength" class="badge badge-warning p-1" style="display:none"></span>
+            </label>
+
             <input id="uploadAuctionPic" class="form-control" name="AuctionPictures" type="file" style="display:none" multiple="multiple" />
             <input type="hidden" id="pictureIds" name="AuctionPictures" />
             <div id="picsArea"></div>
+        </div>
+        <div id="errorDiv" class="form-group alert alert-danger" style="display:none">
+
         </div>
     </div>
     <div class="modal-footer">
@@ -49,7 +56,67 @@
         <button id="AuctionSaveBtn" type="button" class="btn btn-primary">Save changes</button>
     </div>
 </form>
+
 <script>
+    var d = new Date();
+    var month = d.getMonth() + 1;
+    var day = d.getDate();
+
+    var currentDate = (month < 10 ? '0' : '') + month + '/' + (day < 10 ? '0' : '') + day + '/' + d.getFullYear();
+
+    $('input[name="StartingTime"]').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        drops: 'up',
+        minDate: currentDate,
+        timePicker: true,
+        minYear: parseInt(moment().format('YYYY')),
+        maxYear: parseInt(moment().format('YYYY'), 11),
+        locale: {
+            format: 'M/DD/YYYY hh:mm A',
+        }
+    });
+
+    $('input[name="EndTime"]').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        drops: 'up',
+        minDate: currentDate,
+        timePicker: true,
+        minYear: parseInt(moment().format('YYYY')),
+        maxYear: parseInt(moment().format('YYYY'), 11),
+        locale: {
+            format: 'M/DD/YYYY hh:mm A',
+        }
+    });
+
+
+    $("#CreateTable").validate({
+        rules: {
+            Title: {
+                required: true,
+                minlength: 15,
+                maxlength: 150
+            },
+            ActualPrice: {
+                required: true,
+                range: [1, 20000000]
+            }
+        },
+        messages: {
+            Title: {
+                required: "Title is rquired.",
+                minlength: "Minmum length is 15",
+                maxlength: "Maximum length is 150"
+            },
+            ActualPrice: {
+                required: "Actual price is required.",
+                range: "Invalid price."
+            }
+        },
+        errorClass: "text-danger"
+    })
+
     $("#AuctionSaveBtn").click(function () {
         if ($("#CreateTable").valid()) {
 
@@ -71,9 +138,17 @@
             })
 
             .done(function (response) {
+                if (response.success) {
+                    ReloadTable()
+                    $("#FormModel").modal('hide');
+                }
+                else {
+                    $("#errorDiv").html(response.message);
+                    $("#errorDiv").show();
 
-                $("#tableContainer").html(response);
-                $('#FormModel').modal('hide');
+                }
+                //$("#tableContainer").html(response);
+                //$('#FormModel').modal('hide');
                 //$("#contentArea").html('');
 
             })
@@ -103,7 +178,7 @@
             contentType: false
         })
             .done(function (responses) {
-                
+
 
 
                 for (var i = 0; i < responses.length; i++) {
@@ -111,11 +186,46 @@
                     AttachNewImage(picResponse.id, picResponse.url);
 
                 }
+                var oldLength;
+                var newLength;
+                if ($("#picLength").text()) {
+                    oldLength = $("#picLength").text()[0];
+                    newLength = parseFloat(oldLength) + parseFloat(picsLength);
+                    $("picLength").empty();
+                }
+                else {
+                    newLength = picsLength;
+                }
+                $("#picLength").append(newLength + " pictures. ");
+                $("#piclength").show();
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("FAIL");
             });
     });
+    function RemoveImageOnClick() {
+        $("#picsArea .image").click(function () {
+            $(this).remove();
+        });
 
-    
+    }
+    function ReloadTable() {
+        $.ajax({
+
+            url:'@Url.Action("AuctionsTable","Auctions")',
+            method:'GET',
+
+        })
+           .done(function (response) {
+
+
+               $("#tableContainer").html(response);
+
+
+           })
+           .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+               alert("FAIL");
+           });
+
+    }
 </script>

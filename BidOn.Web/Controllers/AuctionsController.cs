@@ -24,14 +24,14 @@ namespace BidOn.Web.Controllers
         // GET: Auctions
         public PartialViewResult AuctionsTable(int? categoryId, string search, int? pageNo)
         {
-            var pageSize = 10;
+            var pageSize = 3;
             pageNo = pageNo ?? 1;
 
             AuctionListingViewModel model = new AuctionListingViewModel();
-
+            //model.PageNo= pageNo ?? 1;
             model.CategoryId = categoryId;
             model.SearchTerm = search;
-            model.AllAuctions = AuctionsService.Instance.FilterAuctions(categoryId, search, pageNo.Value, pageSize);
+            model.AllAuctions = AuctionsService.Instance.FilterAuctions(categoryId, search,pageNo.Value, pageSize);
             model.Categories = CategoryService.Instance.AllCategories();
             var totalAuctions = AuctionsService.Instance.GetAuctionCount(categoryId, search);
 
@@ -52,24 +52,35 @@ namespace BidOn.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(CreateAuctionViewModel model)
+        public JsonResult Create(CreateAuctionViewModel model)
         {
-            Auction auction = new Auction();
+            JsonResult result = new JsonResult();
+            if (ModelState.IsValid) {
 
-            auction.Title = model.Title;
-            auction.Description = model.Description;
-            auction.ActualAmount = model.ActualAmount;
-            auction.StartingTime = model.StartingTime;
-            auction.EndTime = model.EndTime;
-            auction.CategoryId = model.categoryId;
+                Auction auction = new Auction();
 
-            var pictureIds = model.AuctionPictures.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
-            auction.AuctionPictures = new List<AuctionPicture>();
-            auction.AuctionPictures.AddRange(pictureIds.Select(x => new AuctionPicture() { PictureId = x }).ToList());
+                auction.Title = model.Title;
+                auction.Description = model.Description;
+                auction.ActualAmount = model.ActualAmount;
+                auction.StartingTime = model.StartingTime;
+                auction.EndTime = model.EndTime;
+                auction.CategoryId = model.categoryId;
+                if (!string.IsNullOrEmpty(model.AuctionPictures))
+                {
+                    var pictureIds = model.AuctionPictures.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+                    auction.AuctionPictures = new List<AuctionPicture>();
+                    auction.AuctionPictures.AddRange(pictureIds.Select(x => new AuctionPicture() { PictureId = x }).ToList());
+                }
 
-            AuctionsService.Instance.SaveAuction(auction);
+                AuctionsService.Instance.SaveAuction(auction);
 
-            return RedirectToAction("AuctionsTable");
+                result.Data = new { success = true };
+            }
+            else
+            {
+                result.Data = new { success = false, message = "Invalid Inputs" };
+            }
+            return result;
         }
         [HttpGet]
         public ActionResult Edit(int Id)

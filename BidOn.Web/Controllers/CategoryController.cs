@@ -24,7 +24,7 @@ namespace BidOn.Web.Controllers
         public PartialViewResult CategoryTable(string search,int? pageNo)
         {
             CategoryLisingtViewModel model = new CategoryLisingtViewModel();
-            var pageSize = 10;
+            var pageSize = 3;
             pageNo = pageNo ?? 1;
 
             model.SearchTerm = search;

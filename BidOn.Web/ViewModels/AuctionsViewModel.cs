@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using BidOn.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace BidOn.Web.ViewModels
 {
@@ -32,12 +33,17 @@ namespace BidOn.Web.ViewModels
     public class CreateAuctionViewModel : PageViewModel
     {
         public int Id { get; set; }
+
+        [Required, MinLength(15), MaxLength(150)]
         public string Title { get; set; }
 
         public string Description { get; set; }
+
+        [Required, Range(1, 20000000)]
         public decimal ActualAmount { get; set; }
-        public DateTime StartingTime { get; set; }
-        public DateTime EndTime { get; set; }
+
+        public DateTime? StartingTime { get; set; }
+        public DateTime? EndTime { get; set; }
 
         public string AuctionPictures { get; set; }
         public List<AuctionPicture> AuctionPictureList { get; set; }

@@ -21,6 +21,31 @@
 </div>
 
 <script>
+    @*function RemoveImageOnClick() {
+        $("#picsArea .image").click(function () {
+            $(this).remove();
+        });
+
+    }
+    function ReloadTable() {
+        $.ajax({
+
+            url:@Url.Action("AuctionsTable","Auctions"),
+            method:Get
+
+        })
+           .done(function (response) {
+
+
+               $("#tableContainer").html(response);
+
+
+           })
+           .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+               alert("FAIL");
+           });
+
+    }*@
     function focusAction(controlToFocus) {
         $('html, body').animate({
             scrollTop: $("#" + controlToFocus).offset().top - 100
