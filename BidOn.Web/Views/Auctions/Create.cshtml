@@ -95,7 +95,7 @@
         rules: {
             Title: {
                 required: true,
-                minlength: 15,
+                minlength: 3,
                 maxlength: 150
             },
             ActualPrice: {
@@ -196,6 +196,7 @@
                 else {
                     newLength = picsLength;
                 }
+                $("#picLength").empty();
                 $("#picLength").append(newLength + " pictures. ");
                 $("#piclength").show();
             })
@@ -203,29 +204,6 @@
                 alert("FAIL");
             });
     });
-    function RemoveImageOnClick() {
-        $("#picsArea .image").click(function () {
-            $(this).remove();
-        });
-
-    }
-    function ReloadTable() {
-        $.ajax({
-
-            url:'@Url.Action("AuctionsTable","Auctions")',
-            method:'GET',
-
-        })
-           .done(function (response) {
-
-
-               $("#tableContainer").html(response);
-
-
-           })
-           .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-               alert("FAIL");
-           });
-
-    }
+    
+    
 </script>

@@ -42,7 +42,13 @@
 
 
         <div class="form-group">
-            <label for="uploadAuctionPic" class="btn btn-warning" style="cursor:pointer">Update Pictures</label>
+            <label for="uploadAuctionPic" class="btn btn-warning" style="cursor:pointer">Update Pictures
+            @if (Model.AuctionPictures != null && Model.AuctionPictures.Count() > 0)
+            {
+                <span id="existPicLength" class="badge badge-warning p-1">@Model.AuctionPictures.Count() Pictures.</span>
+            }
+            <span id="picLength" class="badge badge-warning p-1" style="display:none"></span>
+            </label>
             <input id="uploadAuctionPic" class="form-control" name="AuctionPictures" type="file" style="display:none" multiple="multiple" />
             <input type="hidden" id="pictureIds" name="AuctionPictures" />
             <div id="picsArea">
@@ -125,6 +131,20 @@
                     AttachNewImage(picResponse.id, picResponse.url);
 
                 }
+                var oldLength;
+                var newLength;
+                if ($("#existPicLength").text()) {
+                    oldLength = $("#existPicLength").text()[0];
+                    newLength = parseFloat(oldLength) + parseFloat(picsLength);
+                    $("picLength").empty();
+                }
+                else {
+                    newLength = picsLength;
+                }
+                $("#existPicLength").empty()
+                $("#picLength").empty();
+                $("#picLength").append(newLength + " pictures. ");
+                $("#piclength").show();
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("FAIL");

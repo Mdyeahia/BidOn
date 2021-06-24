@@ -9,7 +9,7 @@ namespace BidOn.Entities
 {
     public class Auction:BaseEntity
     {
-        [Required,MinLength(15),MaxLength(150)]
+        [Required,MinLength(3),MaxLength(150)]
         public string Title { get; set; }
         
         public string Description { get; set; }
