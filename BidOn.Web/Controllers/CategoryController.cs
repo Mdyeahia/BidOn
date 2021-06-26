@@ -66,7 +66,7 @@ namespace BidOn.Web.Controllers
         [HttpPost]
         public ActionResult Edit(CategoryCreateViewModel model)
         {
-            Category editCategory = new Category();
+            var editCategory = CategoryService.Instance.CategoryById(model.Id);
 
             editCategory.Name = model.Name;
             editCategory.Description = model.Description;

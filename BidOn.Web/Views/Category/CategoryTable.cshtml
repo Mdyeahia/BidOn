@@ -41,16 +41,16 @@
                 </thead>
                 <tbody>
                     @if (Model.AllCategory != null && Model.AllCategory.Count > 0)
-            {
-                foreach (var category in Model.AllCategory)
-                {
+                    {
+                        foreach (var category in Model.AllCategory)
+                        {
                             <tr>
                                 <td><a href="@Url.Action("Details","Category",new {Id=category.Id})">@category.Name</a></td>
 
                                 <td>@category.Description</td>
 
                                 @if (category.Auctions != null && category.Auctions.Count() > 0)
-                    {
+                                {
                                     <td><a href="@Url.Action("Index","Auctions", new { categoryId = category.Id })">@category.Auctions.Count()</a></td>
                                 }
                                 else
@@ -79,6 +79,44 @@
                     }
                 </tbody>
             </table>
+            @if (Model.Pager != null && Model.Pager.TotalPages > 1)
+            {
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        @if (Model.Pager.CurrentPage == 1)
+                        {
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">First</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a class="pageDataLink page-link text-primary" data-href="@Url.Action("CategoryTable","Category" ,new {search=Model.SearchTerm,pageNo=Model.Pager.CurrentPage-1})" style="cursor:pointer">Previous</a>
+                            </li>
+                        }
+                        @for (int page = Model.Pager.StartPage; page < Model.Pager.EndPage; page++)
+                        {
+                            var acitve = page == Model.Pager.CurrentPage ? "active bg-info" : string.Empty;
+                            <li class="page-item @acitve">
+                                <a class="pageDataLink page-link text-primary" data-href="@Url.Action("CategoryTable","Category" ,new {search=Model.SearchTerm,pageNo=page})" style="cursor:pointer">@page</a>
+                            </li>
+                        }
+                        @if (Model.Pager.CurrentPage == Model.Pager.EndPage)
+                        {
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">Last</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item bg-white">
+                                <a class="pageDataLink page-link text-primary" data-href="@Url.Action("CategoryTable","Category" ,new {search=Model.SearchTerm,pageNo=Model.Pager.CurrentPage+1})" style="cursor:pointer">Next</a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            }
 
         </div>
     </div>
@@ -177,7 +215,7 @@
     $(".EditBtn").click(function () {
         $.ajax({
             type: "GET",
-            url: "@Url.Action("Edit", "Category")",
+            url: "@Url.Action("Edit","Category")",
             data: { Id: $(this).attr('data-id') }
 
         })
@@ -193,7 +231,28 @@
 
 
     });
+    $(".pageDataLink").click(function () {
 
+        var url = $(this).attr("data-href");
+
+        $.ajax({
+
+            url: url
+
+        })
+            .done(function (response) {
+
+
+                $("#CategorytableContainer").html(response);
+
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+
+
+    });
     $("#cancelBtn").click(function () {
         $("#actionContainer").html("");
         focusAction("tableContainer");
