@@ -132,15 +132,23 @@ namespace BidOn.Web.Controllers
 
             return RedirectToAction("AuctionsTable");
         }
-
+        [HttpGet]
         public ActionResult Details(int Id)
         {
-            AuctionsViewModel model = new AuctionsViewModel();
+            DetailsAuctionViewModel model = new DetailsAuctionViewModel();
 
             model.PageTitle = "Details";
             model.PageDescription = "Auction details";
 
             model.Auction = AuctionsService.Instance.GetAuctionById(Id);
+
+
+            model.BidsAmount = model.Auction.ActualAmount + model.Auction.Bids.Sum(x =>x.BidAmount);
+
+            var newBidder = model.Auction.Bids.OrderByDescending(x => x.Timestamp).FirstOrDefault();
+
+            model.LatestBidder = newBidder != null ? newBidder.User: null;
+
 
             return View(model);
         }

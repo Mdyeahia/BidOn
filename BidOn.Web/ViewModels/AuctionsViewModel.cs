@@ -26,8 +26,10 @@ namespace BidOn.Web.ViewModels
     {
         public List<Auction> AllAuctions { get; set; }
         public List<Auction> PromotedAuctions { get; set; }
-
         public Auction Auction { get; set; }
+
+        public Bid Bid { get; set; }
+        public decimal ActualPrice { get; set; }
     }
 
     public class CreateAuctionViewModel : PageViewModel
@@ -55,6 +57,13 @@ namespace BidOn.Web.ViewModels
         public Category Category { get; set;}
         public List<Category> Categories { get; set; }
     }
+    public class DetailsAuctionViewModel : PageViewModel
+    {
+        public Auction Auction { get; set; }
+        public BidOnUser LatestBidder { get; set; }
+        public decimal BidsAmount { get; set; }
+    }
 
-    
+
+
 }
