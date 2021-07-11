@@ -59,17 +59,30 @@
             Product Reviews
         </div>
         <div class="card-body">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-            <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-            <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-            <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-            <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-            <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-            <hr>
-            <a href="#" class="btn btn-success">Leave a Review</a>
+            @if (Model.Comment != null && Model.Comment.Count() > 0)
+            {
+                foreach (var comment in Model.Comment)
+                {
+                <p>@comment.Text</p>
+                <small class="text-muted">Posted by @comment.User.UserName on @comment.Timestamp.ToString("yyyy MMM,dd hh:MM tt")</small>
+                <hr>
+                }
+            }
+            else
+            {
+                <b>No one commented on this Bid!!</b>
+
+            }
+            
         </div>
+        <form id="commentForm">
+            <input type="hidden" name="EntityId" value="@Model.EntityId" />
+            <input type="hidden" name="RecordId" value="@Model.Auction.Id" />
+            <div class="form-group">
+                <textarea class="form-control" id="TextBtn"name="Text" rows="3"placeholder="Write your comment..." ></textarea>
+            </div>
+            <button id="commentBtn" type="button" class="btn btn-success">Leave a comment</button>
+        </form>
     </div>
     <!-- /.card -->
 
@@ -85,7 +98,25 @@
             }
         })
         .done(function (response) {
-           
+
+            if (response.success) {
+                window.location.reload();
+            } else {
+                swal("Oops!", response.message, "error");
+            }
+        })
+        .fail(function () {
+            swal("Oops!", "Something went wrong, please try again later.", "error");
+        })
+    })
+    $("#commentBtn").click(function () {
+        $.ajax({
+            url: "@Url.Action("LeaveComment","Comments")",
+            type: 'Post',
+            data: $("#commentForm").serialize()
+        })
+        .done(function (response) {
+
             if (response.success) {
                 window.location.reload();
             } else {

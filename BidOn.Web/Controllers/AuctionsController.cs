@@ -142,6 +142,7 @@ namespace BidOn.Web.Controllers
 
             model.Auction = AuctionsService.Instance.GetAuctionById(Id);
 
+            model.EntityId = (int)EntitiesEnum.Auction;
 
             model.BidsAmount = model.Auction.ActualAmount + model.Auction.Bids.Sum(x =>x.BidAmount);
 
@@ -149,6 +150,7 @@ namespace BidOn.Web.Controllers
 
             model.LatestBidder = newBidder != null ? newBidder.User: null;
 
+            model.Comment = CommentsService.Instance.GetComments(model.EntityId, Id);
 
             return View(model);
         }

@@ -62,8 +62,8 @@ namespace BidOn.Web.ViewModels
         public Auction Auction { get; set; }
         public BidOnUser LatestBidder { get; set; }
         public decimal BidsAmount { get; set; }
+        public int EntityId { get; set; }
+
+        public List<Comment> Comment { get; set; }
     }
-
-
-
 }

@@ -62,6 +62,8 @@
     <Compile Include="Bid.cs" />
     <Compile Include="BidOnUser.cs" />
     <Compile Include="Category.cs" />
+    <Compile Include="Comment.cs" />
+    <Compile Include="EntitiesEnum.cs" />
     <Compile Include="Picture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

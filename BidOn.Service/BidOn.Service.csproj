@@ -82,6 +82,7 @@
     <Compile Include="BidOnUserManager.cs" />
     <Compile Include="BidsService.cs" />
     <Compile Include="CategoryService.cs" />
+    <Compile Include="CommentsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SharedService.cs" />
   </ItemGroup>
