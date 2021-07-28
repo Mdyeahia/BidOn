@@ -44,5 +44,17 @@ namespace BidOn.Service
             return context.Comments.Include(c =>c.User).Where(c => c.EntityId == entityId && c.RecordId == recordId).ToList();
 
         }
+        public void DeleteEntityComments(int entityId, int recordId)
+        {
+            BidOnContext context = new BidOnContext();
+
+            var auctioncomments = context.Comments.Where(c => c.EntityId == entityId && c.RecordId == recordId);
+            
+            foreach (var comment in auctioncomments)
+            {
+                context.Entry(comment).State = EntityState.Deleted;
+            }
+            context.SaveChanges();
+        }
     }
 }

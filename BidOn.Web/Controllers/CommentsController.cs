@@ -25,6 +25,7 @@ namespace BidOn.Web.Controllers
                     var comment = new Comment();
 
                     comment.Text = model.Text;
+                    comment.Rating = model.Rating;
                     comment.Timestamp = DateTime.Now;
                     comment.EntityId = model.EntityId;
                     comment.RecordId = model.RecordId;

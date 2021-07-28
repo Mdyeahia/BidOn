@@ -18,6 +18,8 @@ namespace BidOn.Web.ViewModels
         public int? PageNo { get; set; }
 
         public Pager pager { get; set; }
+
+        public int EntityId { get; set; }
         
     }
 
@@ -30,6 +32,7 @@ namespace BidOn.Web.ViewModels
 
         public Bid Bid { get; set; }
         public decimal ActualPrice { get; set; }
+        public decimal BidsAmount { get; set; }
     }
 
     public class CreateAuctionViewModel : PageViewModel

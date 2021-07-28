@@ -42,8 +42,10 @@ namespace BidOn.Service
         {
             BidOnContext context = new BidOnContext();
 
-
-            return context.Auctions.Include(a => a.AuctionPictures).Include("AuctionPictures.Picture").ToList();
+            return context.Auctions.Include(a => a.AuctionPictures)
+                .Include("AuctionPictures.Picture")
+                .Include(a=>a.Bids)
+                .ToList();
 
 
         }
@@ -89,7 +91,9 @@ namespace BidOn.Service
         {
             BidOnContext context = new BidOnContext();
 
-            return context.Auctions.Take(4).Include("AuctionPictures.Picture").ToList();
+            return context.Auctions.Take(6).Include("AuctionPictures.Picture")
+                .Include(b=>b.Bids)
+                .ToList();
 
         }
         public void SaveAuction(Auction auction)
@@ -120,6 +124,7 @@ namespace BidOn.Service
             var deleteAuction = context.Auctions.Find(Id);
 
             context.Entry(deleteAuction).State = EntityState.Deleted;
+            //context.Entry(auction).State = EntityState.Deleted;
             context.SaveChanges();
 
         }

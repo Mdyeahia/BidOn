@@ -85,6 +85,10 @@
     <Compile Include="Migrations\202107101140107_CommentAdded.designer.cs">
       <DependentUpon>202107101140107_CommentAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107121731390_RatingWithComment.cs" />
+    <Compile Include="Migrations\202107121731390_RatingWithComment.designer.cs">
+      <DependentUpon>202107121731390_RatingWithComment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -119,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107101140107_CommentAdded.resx">
       <DependentUpon>202107101140107_CommentAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107121731390_RatingWithComment.resx">
+      <DependentUpon>202107121731390_RatingWithComment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

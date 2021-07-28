@@ -31,6 +31,7 @@ namespace BidOn.Web.Controllers
             //model.PageNo= pageNo ?? 1;
             model.CategoryId = categoryId;
             model.SearchTerm = search;
+            model.EntityId = (int)EntitiesEnum.Auction;
             model.AllAuctions = AuctionsService.Instance.FilterAuctions(categoryId, search,pageNo.Value, pageSize);
             model.Categories = CategoryService.Instance.AllCategories();
             var totalAuctions = AuctionsService.Instance.GetAuctionCount(categoryId, search);
@@ -59,6 +60,7 @@ namespace BidOn.Web.Controllers
 
                 Auction auction = new Auction();
 
+                auction.Id = model.Id;
                 auction.Title = model.Title;
                 auction.Description = model.Description;
                 auction.ActualAmount = model.ActualAmount;
@@ -69,7 +71,7 @@ namespace BidOn.Web.Controllers
                 {
                     var pictureIds = model.AuctionPictures.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
                     auction.AuctionPictures = new List<AuctionPicture>();
-                    auction.AuctionPictures.AddRange(pictureIds.Select(x => new AuctionPicture() { PictureId = x }).ToList());
+                    auction.AuctionPictures.AddRange(pictureIds.Select(x => new AuctionPicture() { AuctionId = auction.Id,PictureId = x }).ToList());
                 }
 
                 AuctionsService.Instance.SaveAuction(auction);
@@ -123,15 +125,6 @@ namespace BidOn.Web.Controllers
             return RedirectToAction("AuctionsTable");
         }
 
-
-        [HttpPost]
-        public ActionResult Delete(int Id)
-        {
-
-            AuctionsService.Instance.DeleteAuction(Id);
-
-            return RedirectToAction("AuctionsTable");
-        }
         [HttpGet]
         public ActionResult Details(int Id)
         {
@@ -153,6 +146,14 @@ namespace BidOn.Web.Controllers
             model.Comment = CommentsService.Instance.GetComments(model.EntityId, Id);
 
             return View(model);
+        }
+        [HttpPost]
+        public ActionResult Delete(int entityId,int Id)
+        {
+
+            AuctionsService.Instance.DeleteAuction(Id);
+            CommentsService.Instance.DeleteEntityComments(entityId,Id);
+            return RedirectToAction("AuctionsTable");
         }
 
     }

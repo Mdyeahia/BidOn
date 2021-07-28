@@ -9,6 +9,7 @@ namespace BidOn.Entities
     public class Comment:BaseEntity
     {
         public string Text { get; set; }
+        public int Rating { get; set; }
         public DateTime Timestamp { get; set; }
 
         public string UserId { get; set; }

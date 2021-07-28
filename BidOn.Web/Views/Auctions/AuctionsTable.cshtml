@@ -39,10 +39,10 @@
                         }
 
                         <input type="text" id="searchTxt" name="search" class="form-control mr-1" placeholder="Search by title..." value="@Model.SearchTerm">
-                        <div class="input-group-append" id="button-addon4">
-                            <button id="searchBtn" class="btn btn-outline-primary mr-1" type="button">Search</button>
-                            <button id="resetBtn" class="btn btn-outline-secondary mr-1" type="button">Reset</button>
-                            <button id="CreateAuctionBtn" class="action-btn btn btn-outline-success" type="button">New</button>
+                        <div class="input-group-append link-danger" id="button-addon4">
+                            <button id="searchBtn" class="btn btn-primary mr-1" type="button">Search</button>
+                            <button id="resetBtn" class="btn btn-secondary mr-1" type="button">Reset</button>
+                            <button id="CreateAuctionBtn" class="action-btn btn btn-success mr-1" type="button">Create New Auction</button>
                         </div>
                     </div>
                 </form>
@@ -52,7 +52,7 @@
         <div id="ListingTable">
 
             <table class="table table-striped">
-                <thead>
+                <thead style="background-color:darkseagreen">
                     <tr>
                         <td>Title</td>
 
@@ -251,7 +251,8 @@
                         type: "Post",
                         url: "@Url.Action("Delete", "Auctions")",
                         data: {
-                            Id: $(this).attr('data-id')
+                            entityId:@Model.EntityId,
+                            Id: $(this).attr('data-id'),
                         }
                     })
                         .done(function (response) {

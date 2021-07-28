@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "Home Page";
 }
-
 <div class="row">
 
 
@@ -28,7 +27,7 @@
                         var active = promotePic == Model.PromotedAuctions.First() ? "active" : string.Empty;
                         <div class="carousel-item @active">
                             <a href="@Url.Action("Details", "Auctions",new { Id = promotePic.Id })">
-                                <img class="d-block img-fluid" src="~/Content/images/@promotePic.AuctionPictures.First().Picture.Url" style="width:900px; height:350px;">
+                                <img class="d-block img-fluid" src="~/Content/images/@promotePic.AuctionPictures.First().Picture.Url" style="width:988px; height:344px;">
                             </a>
                         </div>
                     }
@@ -49,47 +48,50 @@
                 var picUrl = auction.AuctionPictures != null && auction.AuctionPictures.Count > 0 ?
                    auction.AuctionPictures.First().Picture.Url : "http://placehold.it/700x400";
 
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card h-100">
+            <div class="col-md-2">
+                <div class="card rounded-0">
+                    <div class="card-image">
                         <a href=" @Url.Action("Details", "Auctions", new { Id = auction.Id }) ">
-                            <img class="card-img-top" src="~/Content/images/@picUrl" alt="">
+                            <img class="card-img-top" src="~/Content/images/@picUrl"width="188"height="188" alt="">
                         </a>
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <a href="@Url.Action("Details","Auctions",new {Id=auction.Id})">@auction.Title</a>
-                            </h4>
-                            <h5>@auction.ActualAmount</h5>
-                            <p class="card-text">@auction.Description</p>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                        </div>
-
+                    </div>
+                    <div class="mt-2" style="margin:0 8px;">
+                        <h6 class="mb-0">@auction.Description</h6>
+                        <span class="font-italic" style="color: #f57224">$@(@auction.ActualAmount + @auction.Bids.Sum(b => b.BidAmount))</span>
+                    </div>
+                    <div class="mt-4 d-flex flex-row gap-1">
+                        <button type="button" style="padding:0px 0px;margin:0 0 5px 4px;" class="bidBtnId btn btn-info left" auction-value="@auction.Id">Bid Now</button>
+                        <small class="text-muted float-right" style="margin:0 0 0 20px">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
                     </div>
                 </div>
+            </div>
             }
         </div>
 
-        <div class="row">
+        <div class=" row">
             @foreach (var auction in Model.AllAuctions)
             {
                 var picUrl = auction.AuctionPictures != null && auction.AuctionPictures.Count > 0 ?
                    auction.AuctionPictures.First().Picture.Url : "http://placehold.it/700x400";
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <a href="#"><img class="card-img-top" src="~/Content/images/@picUrl" alt=""></a>
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <a href="@Url.Action("Details","Auctions",new {Id=auction.Id})">@auction.Title</a>
-                            </h4>
-                            <h5>@auction.ActualAmount</h5>
-                            <p class="card-text">@auction.Description</p>
+
+                <div class="col-md-2">
+                    <div class="card rounded-0">
+                        <div class="card-image">
+                            <a href=" @Url.Action("Details", "Auctions", new { Id = auction.Id }) ">
+                                <img class="card-img-top" src="~/Content/images/@picUrl"width="188"height="188" alt="">
+                            </a>
                         </div>
-                        <div class="card-footer">
-                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        <div class="mt-2"style="margin:0 8px;">
+                            <h6 class="mb-0">@auction.Description</h6>
+                            <span class="font-italic"style="color: #f57224">$@(@auction.ActualAmount + @auction.Bids.Sum(b => b.BidAmount))</span>
+                        </div>
+                        <div class="mt-4 d-flex flex-row gap-1">
+                            <button type="button" style="padding:0px 0px;margin:0 0 5px 4px;" class="bidBtnId btn btn-info left" auction-value="@auction.Id">Bid Now</button>
+                            <small class="text-muted float-right"style="margin:0 0 0 20px">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
                         </div>
                     </div>
                 </div>
+
             }
         </div>
         <!-- /.row -->
@@ -97,23 +99,43 @@
     </div>
 </div>
 <script>
-    var slideIndex = 0;
-    showSlides();
+    //var slideIndex = 0;
 
-    function showSlides() {
-        var i;
-        var slides = document.getElementsByClassName("mySlides");
-        // var dots = document.getElementsByClassName("dot");
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        slideIndex++;
-        if (slideIndex > slides.length) { slideIndex = 1 }
-        //for (i = 0; i < dots.length; i++) {
-        //  dots[i].className = dots[i].className.replace(" active", "");
-        //}
-        slides[slideIndex - 1].style.display = "block";
-        //dots[slideIndex-1].className += " active";
-        setTimeout(showSlides, 2000); // Change image every 2 seconds
-    }
+    //function showSlides() {
+    //    var i;
+    //    var slides = document.getElementsByClassName("mySlides");
+    //    // var dots = document.getElementsByClassName("dot");
+    //    for (i = 0; i < slides.length; i++) {
+    //        slides[i].style.display = "none";
+    //    }
+    //    slideIndex++;
+    //    if (slideIndex > slides.length) { slideIndex = 1 }
+    //    //for (i = 0; i < dots.length; i++) {
+    //    //  dots[i].className = dots[i].className.replace(" active", "");
+    //    //}
+    //    slides[slideIndex - 1].style.display = "block";
+    //    //dots[slideIndex-1].className += " active";
+    //    setTimeout(showSlides, 2000); // Change image every 2 seconds
+    //}
+    //showSlides();
+    $(".bidBtnId").click(function () {
+        $.ajax({
+            url: "@Url.Action("Bid","Bids")",
+            type: 'Post',
+            data: {
+                AuctionId:$(this).attr("auction-value")
+            }
+        })
+        .done(function (response) {
+
+            if (response.success) {
+                window.location.reload();
+            } else {
+                swal("Oops!", response.message, "error");
+            }
+        })
+        .fail(function () {
+            swal("Oops!", "Something went wrong, please try again later.", "error");
+        })
+    })
 </script>
