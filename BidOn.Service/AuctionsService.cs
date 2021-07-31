@@ -46,11 +46,7 @@ namespace BidOn.Service
                 .Include("AuctionPictures.Picture")
                 .Include(a=>a.Bids)
                 .ToList();
-
-
         }
-
-
         public List<Auction> FilterAuctions(int? categoryId, string searchTerm, int pageNo,int pageSize)
         {
             var context = new BidOnContext();

@@ -89,6 +89,10 @@
     <Compile Include="Migrations\202107121731390_RatingWithComment.designer.cs">
       <DependentUpon>202107121731390_RatingWithComment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107290515348_SummaryOfAuction.cs" />
+    <Compile Include="Migrations\202107290515348_SummaryOfAuction.designer.cs">
+      <DependentUpon>202107290515348_SummaryOfAuction.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -126,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107121731390_RatingWithComment.resx">
       <DependentUpon>202107121731390_RatingWithComment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107290515348_SummaryOfAuction.resx">
+      <DependentUpon>202107290515348_SummaryOfAuction.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

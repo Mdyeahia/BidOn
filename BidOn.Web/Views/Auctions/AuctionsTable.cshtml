@@ -56,13 +56,15 @@
                     <tr>
                         <td>Title</td>
 
-                        <td>Description</td>
+                        <td>Summery</td>
 
                         <td>ActualAmount</td>
 
                         <td>StartingTime</td>
 
                         <td>EndTime</td>
+
+                        <td>Bids</td>
 
                         <td>Actions</td>
                     </tr>
@@ -73,26 +75,28 @@
                     {
                         foreach (var auction in Model.AllAuctions)
                         {
-                            <tr>
-                                <td>@auction.Title</td>
+                    <tr>
+                        <td>@auction.Title</td>
 
-                                <td>@auction.Description</td>
+                        <td>@auction.Summery</td>
 
-                                <td>@auction.ActualAmount</td>
+                        <td>@auction.ActualAmount</td>
 
-                                <td>@auction.StartingTime</td>
+                        <td>@auction.StartingTime</td>
 
-                                <td>@auction.EndTime</td>
+                        <td>@auction.EndTime</td>
 
-                                <td>
-                                    <button type="button" class="DeleteBtn btn btn-danger" data-id="@auction.Id">Delete</button>
+                        <td>@auction.Bids.Count()</td>
 
-
-                                    <button type="button" class="EditBtn btn btn-primary" data-id="@auction.Id" data-toggle="modal" data-target="FormModel">Edit</button>
-                                </td>
+                        <td>
+                            <button type="button" class="DeleteBtn btn btn-danger" data-id="@auction.Id">Delete</button>
 
 
-                            </tr>
+                            <button type="button" class="EditBtn btn btn-primary" data-id="@auction.Id" data-toggle="modal" data-target="FormModel">Edit</button>
+                        </td>
+
+
+                    </tr>
                         }
 
                     }

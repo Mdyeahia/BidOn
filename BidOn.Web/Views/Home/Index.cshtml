@@ -2,92 +2,161 @@
 
 @{
     ViewBag.Title = "Home Page";
+    
 }
-<div class="row">
-
-
-
-    <div class="col-lg-12">
-        @if (Model.PromotedAuctions != null && Model.PromotedAuctions.Count() > 0)
-        {
-            var i = 0;
-            <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    @foreach (var promotePic in Model.PromotedAuctions)
-                    {
-                        var active = promotePic == Model.PromotedAuctions.First() ? "active" : string.Empty;
-                        <li data-target="#carouselExampleIndicators" data-slide-to="@i" class="@active"></li>
-                        i++;
-                    }
-
-                </ol>
-                <div class="carousel-inner" role="listbox">
-                    @foreach (var promotePic in Model.PromotedAuctions)
-                    {
-                        var active = promotePic == Model.PromotedAuctions.First() ? "active" : string.Empty;
-                        <div class="carousel-item @active">
-                            <a href="@Url.Action("Details", "Auctions",new { Id = promotePic.Id })">
-                                <img class="d-block img-fluid" src="~/Content/images/@promotePic.AuctionPictures.First().Picture.Url" style="width:988px; height:344px;">
-                            </a>
-                        </div>
-                    }
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        }
+<section class="featured spad">
+    <div class="container">
         <div class="row">
+            <div class="col-lg-12">
+                @if (Model.PromotedAuctions != null && Model.PromotedAuctions.Count() > 0)
+                {
+                    var i = 0;
+                    <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            @foreach (var promotePic in Model.PromotedAuctions)
+                            {
+                                var active = promotePic == Model.PromotedAuctions.First() ? "active" : string.Empty;
+                                <li data-target="#carouselExampleIndicators" data-slide-to="@i" class="@active"></li>
+                                i++;
+                            }
+
+                        </ol>
+                        <div class="carousel-inner" role="listbox">
+                            @foreach (var promotePic in Model.PromotedAuctions)
+                            {
+                                var active = promotePic == Model.PromotedAuctions.First() ? "active" : string.Empty;
+                                <div class="carousel-item @active">
+                                    <a href="@Url.Action("Details", "Auctions",new { Id = promotePic.Id })">
+                                        <img class="d-block img-fluid" src="~/Content/images/@promotePic.AuctionPictures.First().Picture.Url" style="width:988px; height:344px;">
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<section class="featured spad">
+    <div class="container">
+        <div class="section-title" style="text-align: center; margin: 20px 0 20px 0; ">
+            <h2>Promoted Auctions</h2>
+        </div>
+        <div class="row" style="background-color:ghostwhite;">
+
             @foreach (var auction in Model.PromotedAuctions)
             {
                 var picUrl = auction.AuctionPictures != null && auction.AuctionPictures.Count > 0 ?
                    auction.AuctionPictures.First().Picture.Url : "http://placehold.it/700x400";
 
-            <div class="col-md-2">
-                <div class="card rounded-0">
-                    <div class="card-image">
-                        <a href=" @Url.Action("Details", "Auctions", new { Id = auction.Id }) ">
-                            <img class="card-img-top" src="~/Content/images/@picUrl"width="188"height="188" alt="">
-                        </a>
-                    </div>
-                    <div class="mt-2" style="margin:0 8px;">
-                        <h6 class="mb-0">@auction.Description</h6>
-                        <span class="font-italic" style="color: #f57224">$@(@auction.ActualAmount + @auction.Bids.Sum(b => b.BidAmount))</span>
-                    </div>
-                    <div class="mt-4 d-flex flex-row gap-1">
-                        <button type="button" style="padding:0px 0px;margin:0 0 5px 4px;" class="bidBtnId btn btn-info left" auction-value="@auction.Id">Bid Now</button>
-                        <small class="text-muted float-right" style="margin:0 0 0 20px">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                <div class="col-md-2">
+
+                    <div class="single-product" style="margin:5px 0 0 0;">
+                        <div class="product-img">
+                            <a href="@Url.Action("Details", "Auctions", new { Id = auction.Id }) ">
+                                <img class="card-img-top" src="~/Content/images/@picUrl" width="188" height="188" alt="">
+                            </a>
+                            <div class="button-head">
+                                <div class="product-action">
+                                    @if (auction.Summery.Length > 29)
+                                    {<h6 class="mb-0" style="height: 36px">@auction.Summery.Substring(0, 28)...</h6>}
+                                else
+                                {
+                                    {<h6 class="mb-0" style="height: 36px">@auction.Summery.</h6>}
+                            }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <span class="font-italic" style="color: #f57224">$@(@auction.ActualAmount + @auction.Bids.Sum(b => b.BidAmount))</span>
+                            <div class="product-price">
+                                <button type="button" style="padding:0px 0px;margin:0 0 5px 4px;" class="bidBtnId btn btn-info left" auction-value="@auction.Id">Bid Now</button>
+                                @{
+                                    int? average = BidOn.Service.CommentsService.Instance.RatingAverage(Model.EntityId, auction.Id);
+                                    int? defaultStar = 5 - average;
+                                }
+                                <span class="text-muted float-right" style="font-size: 60%;">
+
+                                    @for (int i = 0; i < average; i++)
+                                    {
+                                        <i class="text-warning fa fa-star"></i>
+                                    }
+                                    @for (int i = 0; i < defaultStar; i++)
+                                    {
+                                        <i class="text-warning far fa-star"></i>
+                                    }
+
+                                </span>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
             }
         </div>
 
+    </div>
+</section>
+<section class="featured spad">
+    <div class="container">
+        <div class="section-title" style="text-align: center; margin: 20px 0 20px 0; background-color: #E59866; ">
+            <h2>All Auctions</h2>
+        </div>
         <div class=" row">
             @foreach (var auction in Model.AllAuctions)
             {
+
                 var picUrl = auction.AuctionPictures != null && auction.AuctionPictures.Count > 0 ?
                    auction.AuctionPictures.First().Picture.Url : "http://placehold.it/700x400";
 
                 <div class="col-md-2">
-                    <div class="card rounded-0">
-                        <div class="card-image">
-                            <a href=" @Url.Action("Details", "Auctions", new { Id = auction.Id }) ">
-                                <img class="card-img-top" src="~/Content/images/@picUrl"width="188"height="188" alt="">
+                    <div class="single-product">
+                        <div class="product-img">
+                            <a href="@Url.Action("Details", "Auctions", new { Id = auction.Id }) ">
+                                <img class="card-img-top" src="~/Content/images/@picUrl" width="188" height="188" alt="">
                             </a>
+                            <div class="button-head">
+                                <div class="product-action">
+                                    @if (auction.Summery.Length > 29)
+                                    {<h6 class="mb-0" style="height: 36px">@auction.Summery.Substring(0, 28)...</h6>}
+                                else
+                                {
+                                    {<h6 class="mb-0" style="height: 36px">@auction.Summery.</h6>}
+                            }
+                                </div>
+                            </div>
                         </div>
-                        <div class="mt-2"style="margin:0 8px;">
-                            <h6 class="mb-0">@auction.Description</h6>
-                            <span class="font-italic"style="color: #f57224">$@(@auction.ActualAmount + @auction.Bids.Sum(b => b.BidAmount))</span>
-                        </div>
-                        <div class="mt-4 d-flex flex-row gap-1">
-                            <button type="button" style="padding:0px 0px;margin:0 0 5px 4px;" class="bidBtnId btn btn-info left" auction-value="@auction.Id">Bid Now</button>
-                            <small class="text-muted float-right"style="margin:0 0 0 20px">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        <div class="product-content">
+                            <span class="font-italic" style="color: #f57224">$@(@auction.ActualAmount + @auction.Bids.Sum(b => b.BidAmount))</span>
+                            <div class="product-price">
+                                <button type="button" style="padding:0px 0px;margin:0 0 5px 4px;" class="bidBtnId btn btn-info left" auction-value="@auction.Id">Bid Now</button>
+                                @{ 
+                                    int? average = BidOn.Service.CommentsService.Instance.RatingAverage(Model.EntityId, auction.Id);
+                                    int? defaultStar = 5 - average;
+                                    }
+                                <span class="text-muted float-right" style="font-size: 60%;">
+                                   
+                                    @for (int i = 0; i < average; i++)
+                                    {
+                                        <i class="text-warning fa fa-star"></i>
+                                    }
+                                    @for (int i =0;i<defaultStar; i++)
+                                    {
+                                        <i class="text-warning far fa-star"></i>
+                                    }
+                                    
+                                </span>
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -95,9 +164,8 @@
             }
         </div>
         <!-- /.row -->
-
     </div>
-</div>
+</section>
 <script>
     //var slideIndex = 0;
 

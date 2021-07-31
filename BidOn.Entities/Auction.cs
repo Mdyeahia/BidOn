@@ -14,6 +14,8 @@ namespace BidOn.Entities
         
         public string Description { get; set; }
 
+        public string Summery { get; set; }
+
         [Required,Range(1,20000000)]
         public decimal ActualAmount { get; set; }
 

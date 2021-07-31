@@ -33,6 +33,9 @@ namespace BidOn.Web.ViewModels
         public Bid Bid { get; set; }
         public decimal ActualPrice { get; set; }
         public decimal BidsAmount { get; set; }
+
+        public int EntityId { get; set; }
+
     }
 
     public class CreateAuctionViewModel : PageViewModel
@@ -42,6 +45,7 @@ namespace BidOn.Web.ViewModels
         [Required, MinLength(3), MaxLength(150)]
         public string Title { get; set; }
 
+        public string Summery { get; set; }
         public string Description { get; set; }
 
         [Required, Range(1, 20000000)]
@@ -68,5 +72,6 @@ namespace BidOn.Web.ViewModels
         public int EntityId { get; set; }
 
         public List<Comment> Comment { get; set; }
+        public int? RatingStar { get; set; }
     }
 }

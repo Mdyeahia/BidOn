@@ -62,6 +62,7 @@ namespace BidOn.Web.Controllers
 
                 auction.Id = model.Id;
                 auction.Title = model.Title;
+                auction.Summery = model.Summery;
                 auction.Description = model.Description;
                 auction.ActualAmount = model.ActualAmount;
                 auction.StartingTime = model.StartingTime;
@@ -103,6 +104,7 @@ namespace BidOn.Web.Controllers
             //auction.Id = model.Id;
             var auction = AuctionsService.Instance.GetAuctionById(model.Id);
             auction.Title = model.Title;
+            auction.Summery = model.Summery;
             auction.Description = model.Description;
             auction.ActualAmount = model.ActualAmount;
             auction.StartingTime = model.StartingTime;
@@ -144,6 +146,8 @@ namespace BidOn.Web.Controllers
             model.LatestBidder = newBidder != null ? newBidder.User: null;
 
             model.Comment = CommentsService.Instance.GetComments(model.EntityId, Id);
+            model.RatingStar = CommentsService.Instance.RatingAverage(model.EntityId, Id);
+
 
             return View(model);
         }

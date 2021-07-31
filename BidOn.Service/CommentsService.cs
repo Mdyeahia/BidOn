@@ -41,8 +41,18 @@ namespace BidOn.Service
         {
             BidOnContext context = new BidOnContext();
 
-            return context.Comments.Include(c =>c.User).Where(c => c.EntityId == entityId && c.RecordId == recordId).ToList();
+            return context.Comments.Include(c =>c.User)
+                .Where(c => c.EntityId == entityId && c.RecordId == recordId)
+                .ToList();
 
+        }
+        public int? RatingAverage(int entityId, int recordId)
+        {
+            BidOnContext context = new BidOnContext();
+
+            return (int)(context.Comments
+                .Where(c => c.EntityId == entityId && c.RecordId == recordId)
+                .Average(c =>(decimal?)c.Rating)??0);
         }
         public void DeleteEntityComments(int entityId, int recordId)
         {

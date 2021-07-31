@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BidOn.Entities;
 using BidOn.Service;
 using BidOn.Web.ViewModels;
 
@@ -19,7 +20,7 @@ namespace BidOn.Web.Controllers
 
             model.AllAuctions = AuctionsService.Instance.GetAllAuction();
             model.PromotedAuctions = AuctionsService.Instance.GetPromotedAuctions();
-
+            model.EntityId= (int)EntitiesEnum.Auction;
             return View(model);
         }
 

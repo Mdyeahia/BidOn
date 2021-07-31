@@ -22,7 +22,10 @@
 
             </select>
         </div>
-
+        <div class="form-group">
+            <label>Summery</label>
+            <input class="form-control" name="Summery" value="@Model.Auction.Summery" />
+        </div>
         <div class="form-group">
             <label>Description</label>
             <input class="form-control" name="Description" value="@Model.Auction.Description" />
@@ -42,12 +45,13 @@
 
 
         <div class="form-group">
-            <label for="uploadAuctionPic" class="btn btn-warning" style="cursor:pointer">Update Pictures
-            @if (Model.AuctionPictures != null && Model.AuctionPictures.Count() > 0)
-            {
-                <span id="existPicLength" class="badge badge-warning p-1">@Model.AuctionPictures.Count() Pictures.</span>
-            }
-            <span id="picLength" class="badge badge-warning p-1" style="display:none"></span>
+            <label for="uploadAuctionPic" class="btn btn-warning" style="cursor:pointer">
+                Update Pictures
+                @if (Model.AuctionPictures != null && Model.AuctionPictures.Count() > 0)
+                {
+                    <span id="existPicLength" class="badge badge-warning p-1">@Model.AuctionPictures.Count() Pictures.</span>
+                }
+                <span id="picLength" class="badge badge-warning p-1" style="display:none"></span>
             </label>
             <input id="uploadAuctionPic" class="form-control" name="AuctionPictures" type="file" style="display:none" multiple="multiple" />
             <input type="hidden" id="pictureIds" name="AuctionPictures" />
@@ -72,6 +76,37 @@
 </form>
 <script>
     RemoveImageOnClick();
+    var d = new Date();
+    var month = d.getMonth() + 1;
+    var day = d.getDate();
+
+    var currentDate = (month < 10 ? '0' : '') + month + '/' + (day < 10 ? '0' : '') + day + '/' + d.getFullYear();
+
+    $('input[name="StartingTime"]').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        drops: 'up',
+        minDate: currentDate,
+        timePicker: true,
+        minYear: parseInt(moment().format('YYYY')),
+        maxYear: parseInt(moment().format('YYYY'), 11),
+        locale: {
+            format: 'M/DD/YYYY hh:mm A',
+        }
+    });
+
+    $('input[name="EndTime"]').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        drops: 'up',
+        minDate: currentDate,
+        timePicker: true,
+        minYear: parseInt(moment().format('YYYY')),
+        maxYear: parseInt(moment().format('YYYY'), 11),
+        locale: {
+            format: 'M/DD/YYYY hh:mm A',
+        }
+    });
     $("#UpdateBtn").click(function () {
 
         var picIds = [];
@@ -150,8 +185,6 @@
                 alert("FAIL");
             });
     });
-    
-
     $("#cancelBtn").click(function () {
         $("#actionContainer").html("");
         focusAction("tableContainer");
