@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BidOnContext.cs" />
+    <Compile Include="BidOnDBInitializer.cs" />
     <Compile Include="Migrations\202103221526198_EnitityAdded.cs" />
     <Compile Include="Migrations\202103221526198_EnitityAdded.Designer.cs">
       <DependentUpon>202103221526198_EnitityAdded.cs</DependentUpon>

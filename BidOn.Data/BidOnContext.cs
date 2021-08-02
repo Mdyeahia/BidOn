@@ -13,7 +13,7 @@ namespace BidOn.Data
     {
         public BidOnContext() : base("BidOnConnection")
         {
-            
+            Database.SetInitializer(new BidOnDBInitializer());
         }
         public DbSet<Auction> Auctions { get; set; }
         public DbSet<AuctionPicture> AuctionPictures { get; set; }
