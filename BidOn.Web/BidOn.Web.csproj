@@ -233,6 +233,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\css\footer.css" />
     <Content Include="Content\css\shop-homepage.css" />
     <Content Include="Content\css\shop-item.css" />
     <Content Include="Content\images\a008fb80-de1e-4581-bf16-2a151eca9757.PNG" />
@@ -361,6 +362,8 @@
     <Content Include="Views\Category\Details.cshtml" />
     <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.6.0.min.map" />
+    <Content Include="Views\Shared\_TopMenuBar.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
