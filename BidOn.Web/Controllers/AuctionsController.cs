@@ -19,7 +19,7 @@ namespace BidOn.Web.Controllers
             model.PageTitle = "AuctionsTable";
             model.PageDescription = "List of Auctions";
 
-            return View(model);
+            return PartialView(model);
         }
         // GET: Auctions
         public PartialViewResult AuctionsTable(int? categoryId, string search, int? pageNo)
