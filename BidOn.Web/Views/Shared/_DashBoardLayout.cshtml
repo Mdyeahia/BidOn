@@ -25,30 +25,34 @@
 </head>
 <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-        <ul class="navbar-nav px-3">
-            <li class="nav-item text-nowrap">
-                <a class="nav-link" href="#">Sign out</a>
-            </li>
-        </ul>
+        <a class="navbar-brand text-sm-center col-sm-3 col-md-2 ml-2 mr-0" href="@Url.Action("Index","Home")">BidOn__</a>
+        <input class="navbar-brand text-center form-control-dark w-100 bg-dark " value="Hi @User.Identity.Name.ToUpper()" disabled>
+        @if (User.Identity.IsAuthenticated)
+        {<ul class="navbar-nav px-3">
+                <li class="nav-item text-nowrap">
+                    <a class="nav-link" id="logoutBtn">Sign out</a>
+                </li>
+            </ul>
+        }
+        else
+        {
+            <ul class="navbar-nav px-3">
+                <li class="nav-item text-nowrap">
+                    <a class="nav-link" href="@Url.Action("Login","Account")">Sign in</a>
+                </li>
+            </ul>
+        }
     </nav>
 
     <div class="container-fluid">
         <div class="row">
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <nav class="col-md-2 mt-2 d-none d-md-block bg-light sidebar">
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="@Url.Action("Index","DashBoard")">
+                            <a class="nav-link active " href="@Url.Action("Index","DashBoard")">
                                 <span data-feather="home"></span>
-                                Dashboard <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index","Auctions")">
-                                <span data-feather="file"></span>
-                                Auctions
+                                Dashboard <span class="sr-only"></span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -58,27 +62,21 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index","Auctions")">
+                                <span data-feather="file"></span>
+                                Auctions
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <span data-feather="users"></span>
-                                Customers
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="bar-chart-2"></span>
-                                Reports
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="layers"></span>
-                                Integrations
+                                Bids
                             </a>
                         </li>
                     </ul>
 
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Saved reports</span>
+                        <span>User Menu</span>
                         <a class="d-flex align-items-center text-muted" href="#">
                             <span data-feather="plus-circle"></span>
                         </a>
@@ -87,35 +85,34 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <span data-feather="file-text"></span>
-                                Current month
+                                Users
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <span data-feather="file-text"></span>
-                                Last quarter
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Social engagement
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Year-end sale
+                                Roles
                             </a>
                         </li>
                     </ul>
                 </div>
             </nav>
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10  px-4">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 mt-2 px-4">
+
                 @RenderBody()
+
             </main>
         </div>
     </div>
-    
+
 </body>
 </html>
+<form id="logoutForm" method="post" action="@Url.Action("LogOff","Account")">
+    @Html.AntiForgeryToken()
+</form>
+@RenderSection("Scripts", required: false)
+<script>
+    $("#logoutBtn").click(function () {
+        $("#logoutForm").submit();
+    })
+</script>

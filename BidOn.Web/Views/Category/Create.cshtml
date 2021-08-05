@@ -11,7 +11,7 @@
         </div>
         <div class="form-group">
             <label for="Description">Description</label>
-            <input type="text" class="form-control" name="Description" id="Description"/>
+            <input type="text" class="form-control" name="Description" id="Description" />
         </div>
         <div class="modal-footer">
             <button id="cancelBtn" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -19,7 +19,8 @@
         </div>
     </div>
 </form>
-<script>
+@section Scripts{
+    <script>
     $("#AuctionSaveBtn").click(function () {
         if ($("#CategoryCreateTable").valid()) {
             $.ajax({
@@ -42,6 +43,6 @@
         }
 
     });
-</script>
+    </script>
 
-
+}
