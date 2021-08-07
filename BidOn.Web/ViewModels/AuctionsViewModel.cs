@@ -35,6 +35,8 @@ namespace BidOn.Web.ViewModels
         public decimal BidsAmount { get; set; }
 
         public int? CategoryId { get; set; }
+
+        public List<Category> Categories { get; set; }
         public string SearchTerm { get; set; }
         public Pager pager { get; set; }
         public int? PageNo { get; set; }

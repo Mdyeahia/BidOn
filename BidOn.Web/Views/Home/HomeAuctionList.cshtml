@@ -1,10 +1,51 @@
 ﻿@model BidOn.Web.ViewModels.AuctionsViewModel
+@{
+    var categoryId = Model.CategoryId.HasValue ? Model.CategoryId.Value : 0;
+
+
+}
+<div class="row">
+    <div class="col-md-12">
+        <form id="HomeAuctionForm">
+            <div class="input-group">
+                <div class="col col-sm-3 col-xs-12">
+                    @if (Model.Categories != null && Model.Categories.Count() > 0)
+                    {
+                        <select class="form-control mr-1" name="categoryId" id="selectCategory">
+                            <option value="0"  selected>
+                                Select Category
+                            </option>
+                            @foreach (var category in Model.Categories)
+                            {
+                                var selected = category.Id == categoryId ? "selected" : string.Empty;
+                                <option value="@category.Id" @selected>
+                                    @category.Name
+                                </option>
+                            }
+                        </select>
+                    }
+                </div>
+
+                <div class="col-sm-9 col-xs-12 text-right">
+                    <div class="input-append">
+                        <input type="text" id="searchTxt" name="search" class="form-control mr-1" style="width:150px;" placeholder="Search by title..." value="@Model.SearchTerm">
+                        <button id="searchBtn" class="btn btn-primary mr-1" type="button">Search</button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+</div>
+<br />
 <div class=" row">
     @foreach (var auction in Model.AllAuctions)
     {
 
         var picUrl = auction.AuctionPictures != null && auction.AuctionPictures.Count > 0 ?
            auction.AuctionPictures.First().Picture.Url : "http://placehold.it/700x400";
+
 
         <div class="col-md-2">
             <div class="single-product">
@@ -111,4 +152,41 @@
 
 
     });
+
+    $("#selectCategory").change(function () {
+        $.ajax({
+            url: '@Url.Action("HomeAuctionList","Home")',
+            data: {
+                categoryId: $("#selectCategory").val(),
+                search: $("#searchTxt").val()
+            }
+        }).done(function (response) {
+            $("#indexTable").html(response)
+        })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+    });
+    $("#searchBtn").click(function () {
+        $.ajax({
+            url: '@Url.Action("HomeAuctionList", "Home")',
+            data: {
+
+                search: $("#searchTxt").val()
+            }
+
+        })
+            .done(function (response) {
+
+                $("#indexTable").html(response);
+
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+
+
+    });
+
 </script>

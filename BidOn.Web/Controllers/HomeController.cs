@@ -37,7 +37,7 @@ namespace BidOn.Web.Controllers
             model.CategoryId = categoryId;
             model.SearchTerm = search;
             model.AllAuctions = AuctionsService.Instance.FilterAuctions(categoryId, search, pageNo.Value, pageSize);
-            //model.PromotedAuctions = AuctionsService.Instance.GetPromotedAuctions();
+            model.Categories = CategoryService.Instance.AllCategories();
             model.EntityId= (int)EntitiesEnum.Auction;
 
             var totalAuctions = AuctionsService.Instance.GetAuctionCount(categoryId, search);
