@@ -67,5 +67,10 @@ namespace BidOn.Service
             }
             return manager;
         }
+        public static int GetUserCount()
+        {
+            BidOnContext context = new BidOnContext();
+            return context.Users.Count();
+        }
     }
 }

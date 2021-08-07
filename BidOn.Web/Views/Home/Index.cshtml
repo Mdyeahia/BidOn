@@ -1,8 +1,9 @@
 ﻿@model BidOn.Web.ViewModels.AuctionsViewModel
 
 @{
+    var categoryID = Model.CategoryId.HasValue ? Model.CategoryId.Value : 0;
     ViewBag.Title = "Home Page";
-    
+
 }
 <section class="featured spad">
     <div class="container">
@@ -111,56 +112,9 @@
         <div class="section-title" style="text-align: center; margin: 20px 0 20px 0; background-color: azure; ">
             <h2>All Auctions</h2>
         </div>
-        <div class=" row">
-            @foreach (var auction in Model.AllAuctions)
-            {
-
-                var picUrl = auction.AuctionPictures != null && auction.AuctionPictures.Count > 0 ?
-                   auction.AuctionPictures.First().Picture.Url : "http://placehold.it/700x400";
-
-                <div class="col-md-2">
-                    <div class="single-product">
-                        <div class="product-img">
-                            <a href="@Url.Action("Details", "Auctions", new { Id = auction.Id }) ">
-                                <img class="card-img-top" src="~/Content/images/@picUrl" width="188" height="188" alt="">
-                            </a>
-                            <div class="button-head">
-                                <div class="product-action">
-                                    @if (auction.Summery.Length > 29)
-                                    {<h6 class="mb-0" style="height: 36px">@auction.Summery.Substring(0, 28)...</h6>}
-                                else
-                                {
-                                    {<h6 class="mb-0" style="height: 36px">@auction.Summery.</h6>}
-                            }
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <span class="font-italic" style="color: #f57224">$@(@auction.ActualAmount + @auction.Bids.Sum(b => b.BidAmount))</span>
-                            <div class="product-price">
-                                <button type="button" style="padding:0px 0px;margin:0 0 5px 4px;" class="bidBtnId btn btn-info left" auction-value="@auction.Id">Bid Now</button>
-                                @{ 
-                                    int? average = BidOn.Service.CommentsService.Instance.RatingAverage(Model.EntityId, auction.Id);
-                                    int? defaultStar = 5 - average;
-                                    }
-                                <span class="text-muted float-right" style="font-size: 60%;">
-                                   
-                                    @for (int i = 0; i < average; i++)
-                                    {
-                                        <i class="text-warning fa fa-star"></i>
-                                    }
-                                    @for (int i =0;i<defaultStar; i++)
-                                    {
-                                        <i class="text-warning far fa-star"></i>
-                                    }
-                                    
-                                </span>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+        <div id="indexTable">
+            @{
+                Html.RenderAction("HomeAuctionList", new { categoryID = Model.CategoryId, searchTerm = Model.SearchTerm, pageNo = Model.PageNo });
             }
         </div>
         <!-- /.row -->
@@ -206,5 +160,6 @@
             swal("Oops!", "Something went wrong, please try again later.", "error");
         })
     })
+    
 </script>}
 

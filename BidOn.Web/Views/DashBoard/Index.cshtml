@@ -1,16 +1,37 @@
-﻿@{
+﻿@model BidOn.Web.ViewModels.DashBoardViewModel
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
 }
 <div class="jumbotron">
     <h1 class="display-4">Hello, @User.Identity.Name</h1>
-    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+    <p class="lead">Welcome to BidOn </p>
     <hr class="my-4">
-    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-    <p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-    </p>
-</div>
+    <p>Total count of deshboard property</p>
+    <div class="container mt-5 mb-3">
+        <div class="row">
+            <div class="col-lg-3 bg-light" style="margin: 0 8px 8px 0 ">
+                <h1 class="text-center mt-4">@Model.BidOnUserCount</h1>
+                <div class="mt-5 bg-warning">
+                    <h3 class="heading text-center">Users</h3>
+                </div>
+            </div>
+            <div class="col-lg-3 bg-light"style="margin: 0 8px 8px 0 ">
+                <h1 class="text-center mt-4">@Model.Auctions.Count()</h1>
+                <div class="mt-5 bg-warning">
+                    <h3 class="heading text-center">Auctions</h3>
+                </div>
+            </div>
+            <div class="col-lg-3 bg-light"style="margin: 0 0 8px 0">
+                <h1 class="text-center mt-4">@Model.Bids.Count()</h1>
+                <div class="mt-5 bg-warning">
+                    <h3 class="heading text-center">Bids</h3>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 
 
 

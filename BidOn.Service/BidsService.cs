@@ -36,6 +36,12 @@ namespace BidOn.Service
 
             return context.SaveChanges() > 0;
         }
+        public List<Bid> AllBids()
+        {
+            BidOnContext context = new BidOnContext();
+
+            return context.Bids.ToList();
+        }
     }
 
    

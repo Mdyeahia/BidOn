@@ -51,7 +51,9 @@ namespace BidOn.Service
         {
             var context = new BidOnContext();
 
-            var auction = context.Auctions.Include(a => a.Category).AsQueryable();
+            var auction = context.Auctions.Include(a => a.Category).Include("AuctionPictures.Picture")
+                .Include(a => a.Bids)
+                .AsQueryable();
             if (categoryId.HasValue && categoryId.Value > 0)
             {
                 auction = auction.Where(x => x.CategoryId == categoryId.Value);
