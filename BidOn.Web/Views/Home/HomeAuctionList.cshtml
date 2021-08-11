@@ -4,16 +4,16 @@
 
 
 }
-<div class="row">
-    <div class="col-md-12">
-        <form id="HomeAuctionForm">
+<div class="container">
+    <div class="row justify-content-md-center">
+        <form id="AuctionControlForm">
             <div class="input-group">
-                <div class="col col-sm-3 col-xs-12">
+                <div class="col col-lg-4 p-0">
                     @if (Model.Categories != null && Model.Categories.Count() > 0)
                     {
                         <select class="form-control mr-1" name="categoryId" id="selectCategory">
-                            <option value="0"  selected>
-                                Select Category
+                            <option value="0" selected>
+                              All Category
                             </option>
                             @foreach (var category in Model.Categories)
                             {
@@ -25,19 +25,21 @@
                         </select>
                     }
                 </div>
-
-                <div class="col-sm-9 col-xs-12 text-right">
-                    <div class="input-append">
-                        <input type="text" id="searchTxt" name="search" class="form-control mr-1" style="width:150px;" placeholder="Search by title..." value="@Model.SearchTerm">
-                        <button id="searchBtn" class="btn btn-primary mr-1" type="button">Search</button>
-                    </div>
+                <div class="col-md-auto p-0">
+                    <input type="text" id="searchTxt" class="form-control search-slt" placeholder="Enter Search">
                 </div>
+                <div class="col col-lg-2 p-0">
+                    <button type="button"id="searchBtn" class="btn btn-danger wrn-btn">Search</button>
 
+                </div>
             </div>
+
         </form>
     </div>
+</div>       
+        
+    
 
-</div>
 <br />
 <div class=" row">
     @foreach (var auction in Model.AllAuctions)

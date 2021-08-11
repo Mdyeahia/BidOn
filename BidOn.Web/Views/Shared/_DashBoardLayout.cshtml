@@ -3,110 +3,78 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
-
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
-
-    <title>Dashboard Template for Bootstrap</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/dashboard/">
-
-    <!-- Bootstrap core CSS -->
-    <script src="~/Content/vendor/jquery/jquery.min.js"></script>
-    <script src="~/Content/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <!-- Custom styles for this template -->
+    <title>Simple Sidebar - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <script src="https://kit.fontawesome.com/39866f0022.js" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
     <link href="~/Content/css/dashboard.css" rel="stylesheet" />
-
+    <script src="~/Content/vendor/jquery/dashboardJs.js"></script>
+    <script src="~/Content/vendor/jquery/jquery.min.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-        <a class="navbar-brand text-sm-center col-sm-3 col-md-2 ml-2 mr-0" href="@Url.Action("Index","Home")">BidOn__</a>
-        <input class="navbar-brand text-center form-control-dark w-100 bg-dark " value="Hi @User.Identity.Name.ToUpper()" disabled>
-        @if (User.Identity.IsAuthenticated)
-        {<ul class="navbar-nav px-3">
-                <li class="nav-item text-nowrap">
-                    <a class="nav-link" id="logoutBtn">Sign out</a>
-                </li>
-            </ul>
-        }
-        else
-        {
-            <ul class="navbar-nav px-3">
-                <li class="nav-item text-nowrap">
-                    <a class="nav-link" href="@Url.Action("Login","Account")">Sign in</a>
-                </li>
-            </ul>
-        }
-    </nav>
-
-    <div class="container-fluid">
-        <div class="row">
-            <nav class="col-md-2 mt-2 d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active " href="@Url.Action("Index","DashBoard")">
-                                <span data-feather="home"></span>
-                                Dashboard <span class="sr-only"></span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index","category")">
-                                <span data-feather="shopping-cart"></span>
-                                Categories
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index","Auctions")">
-                                <span data-feather="file"></span>
-                                Auctions
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="users"></span>
-                                Bids
-                            </a>
-                        </li>
-                    </ul>
-
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>User Menu</span>
-                        <a class="d-flex align-items-center text-muted" href="#">
-                            <span data-feather="plus-circle"></span>
-                        </a>
-                    </h6>
-                    <ul class="nav flex-column mb-2">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Users
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Roles
-                            </a>
-                        </li>
-                    </ul>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar-->
+        <div class="border-right bg-light" id="sidebar-wrapper">
+            <div class="sidebar-heading fw-bolder">
+                BidOn
+                <i class="fas fa-hand-holding-usd"></i>
+            </div>
+            <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="@Url.Action("Index","Dashboard")">Dashboard</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="@Url.Action("Index","Category")">Category</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="@Url.Action("Index","Auctions")">Auction</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="@Url.Action("Index","Auctions")">Bids</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="@Url.Action("Index","Auctions")">Comment</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="@Url.Action("Index","Users")">Users</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="@Url.Action("Index","Auctions")">Roles</a>
+            </div>
+        </div>
+        <!-- Page content wrapper-->
+        <div id="page-content-wrapper">
+            <!-- Top navigation-->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <div class="container-fluid">
+                    <button class="btn btn-secondary" id="sidebarToggle"><i class="fas fa-indent"></i></button>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                            <li class="nav-item"><a class="nav-link">(Hi @User.Identity.Name)</a></li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="logoutBtn">Logout</a>
+                                    </li>
+                                
+                            }
+                            else
+                            {
+                                
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="@Url.Action("Login","Account")">Login</a>
+                                    </li>
+                               
+                            }
+                        </ul>
+                    </div>
                 </div>
             </nav>
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 mt-2 px-4">
-
+           
+            <div class="container-fluid p-1">
                 @RenderBody()
-
-            </main>
+            </div>
         </div>
     </div>
-
+   
+   
 </body>
 </html>
+
+
 <form id="logoutForm" method="post" action="@Url.Action("LogOff","Account")">
     @Html.AntiForgeryToken()
 </form>

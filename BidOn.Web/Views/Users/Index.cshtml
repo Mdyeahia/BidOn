@@ -3,9 +3,9 @@
     Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
 }
 <div>
-    <div id="tableContainer">
+    <div id="usertableContainer">
         @{
-            Html.RenderAction("AuctionsTable");
+            Html.RenderAction("UsersList");
         }
     </div>
 
@@ -15,7 +15,7 @@
         </div>*@
     <div class="modal fade" id="FormModel" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content" id="contentArea">
+            <div class="modal-content" id="usercontentArea">
             </div>
         </div>
     </div>
@@ -23,7 +23,8 @@
 
 
 </div>
-@section Scripts{<script>
+@section Scripts{
+    <script>
 
     @*function ReloadTable() {
         $.ajax({
@@ -52,4 +53,6 @@
 
 
 
-</script>}
+
+    </script>
+}
