@@ -374,6 +374,8 @@
     <Content Include="Views\Home\HomeAuctionList.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\UsersList.cshtml" />
+    <Content Include="Views\Users\RoleList.cshtml" />
+    <Content Include="Views\Users\RoleIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

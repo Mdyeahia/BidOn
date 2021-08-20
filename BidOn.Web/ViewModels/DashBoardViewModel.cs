@@ -20,6 +20,19 @@ namespace BidOn.Web.ViewModels
         public string SearchTerm { get; set; }
         public string RoleId { get; set; }
         public List<IdentityRole> Roles { get;set; }
+
+        public List<BidOnUser> Admin { get; set; }
+        public List<BidOnUser> Modarator { get; set; }
+        
+        public Pager pager { get; set; }
+        public List<BidOnUser> Users { get; set; }
+    }
+
+    public class RolesViewModel : PageViewModel
+    {
+        public string SearchTerm { get; set; }
+        public List<IdentityRole> Roles { get; set; }
+        public string RoleId { get; set; }
         public Pager pager { get; set; }
         public List<BidOnUser> Users { get; set; }
     }

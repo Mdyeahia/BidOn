@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuctionsService.cs" />
+    <Compile Include="BidOnRoleManager.cs" />
     <Compile Include="BidOnSignInManager.cs" />
     <Compile Include="BidOnUserManager.cs" />
     <Compile Include="BidsService.cs" />
