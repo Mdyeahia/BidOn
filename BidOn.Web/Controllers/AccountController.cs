@@ -153,10 +153,13 @@ namespace BidOn.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new BidOnUser { UserName = model.UserName, Email = model.Email };
+                var user = new BidOnUser { UserName = model.UserName, Email = model.Email,FullName=model.FullName,Country=model.Country,City=model.City,Address=model.Address};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    //UserRoleAdded
+                    await UserManager.AddToRoleAsync(user.Id, "User");
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771

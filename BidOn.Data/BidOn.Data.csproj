@@ -94,6 +94,10 @@
     <Compile Include="Migrations\202107290515348_SummaryOfAuction.designer.cs">
       <DependentUpon>202107290515348_SummaryOfAuction.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202108211421412_IdentityUserPropertiesAdded.cs" />
+    <Compile Include="Migrations\202108211421412_IdentityUserPropertiesAdded.designer.cs">
+      <DependentUpon>202108211421412_IdentityUserPropertiesAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -134,6 +138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107290515348_SummaryOfAuction.resx">
       <DependentUpon>202107290515348_SummaryOfAuction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108211421412_IdentityUserPropertiesAdded.resx">
+      <DependentUpon>202108211421412_IdentityUserPropertiesAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

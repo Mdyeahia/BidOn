@@ -240,6 +240,7 @@
     <Content Include="Content\css\footer.css" />
     <Content Include="Content\css\shop-homepage.css" />
     <Content Include="Content\css\shop-item.css" />
+    <Content Include="Content\css\UserDetails.css" />
     <Content Include="Content\images\a008fb80-de1e-4581-bf16-2a151eca9757.PNG" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.min.css" />
@@ -376,6 +377,11 @@
     <Content Include="Views\Users\UsersList.cshtml" />
     <Content Include="Views\Users\RoleList.cshtml" />
     <Content Include="Views\Users\RoleIndex.cshtml" />
+    <Content Include="Views\Users\UserDetails.cshtml" />
+    <Content Include="Views\Users\_UserDetails.cshtml" />
+    <Content Include="Views\Users\_RolesDetails.cshtml" />
+    <Content Include="Views\Users\_BidDetails.cshtml" />
+    <Content Include="Views\Users\_CommentDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

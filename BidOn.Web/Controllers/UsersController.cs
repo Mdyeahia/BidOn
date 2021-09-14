@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -97,6 +98,28 @@ namespace BidOn.Web.Controllers
 
             return PartialView(model);
         }
+
+        public async Task<ActionResult> UserDetails(string Id,bool isPartial=false)
+        {
+            UserDetailsViewModel model = new UserDetailsViewModel();
+
+            var user =await UserManager.FindByIdAsync(Id);
+
+            if (user != null)
+            {
+                model.User = user;
+            }
+            if(isPartial || Request.IsAjaxRequest())
+            {
+                return PartialView("_UserDetails", model);
+            }
+            else
+            {
+                return View(model);
+            }
+            
+        }
+
         public ActionResult RoleIndex()
         {
 
@@ -133,6 +156,26 @@ namespace BidOn.Web.Controllers
             return PartialView(model);
         }
 
+        public async Task<ActionResult> UserRolesDetails(string Id)
+        {
+            UserDetailsViewModel model = new UserDetailsViewModel();
+            model.AvailableRoles = RoleManager.Roles.ToList();
+            if (!string.IsNullOrEmpty(Id))
+            {
+                var user = await UserManager.FindByIdAsync(Id);
+                if (user != null)
+                {
+                    model.UserRoles = user.Roles.Select
+                        (userRole => model.AvailableRoles
+                        .FirstOrDefault(role => role.Id == userRole.RoleId))
+                        .ToList();
+                }
+            }
+
+             return PartialView("_RolesDetails",model);
+            
+
+        }
 
 
 

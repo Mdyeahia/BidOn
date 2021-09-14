@@ -27,6 +27,14 @@ namespace BidOn.Web.ViewModels
         public Pager pager { get; set; }
         public List<BidOnUser> Users { get; set; }
     }
+    public class UserDetailsViewModel : PageViewModel
+    {
+        public BidOnUser User { get; set; }
+
+        public List<IdentityRole> AvailableRoles { get; set;}
+        public List<IdentityRole> UserRoles { get; set; }
+
+    }
 
     public class RolesViewModel : PageViewModel
     {

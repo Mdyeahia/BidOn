@@ -70,6 +70,13 @@ namespace BidOn.Web.Models
     public class RegisterViewModel: PageViewModel
     {
         [Required]
+        [Display(Name = "FullName")]
+        public string FullName { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
+        public string Address { get; set; }
+
+        [Required]
         [Display(Name = "UserName")]
         public string UserName { get; set; }
 
