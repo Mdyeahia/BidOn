@@ -379,7 +379,7 @@
     <Content Include="Views\Users\RoleIndex.cshtml" />
     <Content Include="Views\Users\UserDetails.cshtml" />
     <Content Include="Views\Users\_UserDetails.cshtml" />
-    <Content Include="Views\Users\_RolesDetails.cshtml" />
+    <Content Include="Views\Users\_UserRolesDetails.cshtml" />
     <Content Include="Views\Users\_BidDetails.cshtml" />
     <Content Include="Views\Users\_CommentDetails.cshtml" />
   </ItemGroup>

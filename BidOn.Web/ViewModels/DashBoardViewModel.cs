@@ -10,8 +10,11 @@ namespace BidOn.Web.ViewModels
     public class DashBoardViewModel:PageViewModel
     {
         public List<Auction> Auctions { get; set; }
+        public List<Category> Categories { get; set; }
         public List<Bid> Bids { get; set; }
 
+        public List<IdentityRole> BidOnRoles { get; set; }
+        public List<Comment> BidOnComment { get; set; }
         public int BidOnUserCount { get; set; }
 
     }
@@ -29,6 +32,7 @@ namespace BidOn.Web.ViewModels
     }
     public class UserDetailsViewModel : PageViewModel
     {
+        public string userId { get; set; }
         public BidOnUser User { get; set; }
 
         public List<IdentityRole> AvailableRoles { get; set;}

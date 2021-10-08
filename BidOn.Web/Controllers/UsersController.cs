@@ -9,8 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
+using System.Web; 
 using System.Web.Mvc;
+
 
 namespace BidOn.Web.Controllers
 {
@@ -68,7 +69,7 @@ namespace BidOn.Web.Controllers
         }
         public  PartialViewResult UsersList(string roleId, string searchTerm, int? pageNo)
         {
-            var pageSize = 1;
+            var pageSize = 3;
             pageNo = pageNo ?? 1;
 
 
@@ -134,7 +135,7 @@ namespace BidOn.Web.Controllers
         }
         public PartialViewResult RoleList(string searchTerm, int? pageNo)
         {
-            var pageSize = 1;
+            var pageSize = 3;
             pageNo = pageNo ?? 1;
 
 
@@ -160,6 +161,7 @@ namespace BidOn.Web.Controllers
         {
             UserDetailsViewModel model = new UserDetailsViewModel();
             model.AvailableRoles = RoleManager.Roles.ToList();
+            model.userId = Id;
             if (!string.IsNullOrEmpty(Id))
             {
                 var user = await UserManager.FindByIdAsync(Id);
@@ -172,11 +174,33 @@ namespace BidOn.Web.Controllers
                 }
             }
 
-             return PartialView("_RolesDetails",model);
+             return PartialView("_UserRolesDetails", model);
             
 
         }
+        public ActionResult AssignRole(string userId, string roleName)
+        {
+            if (!UserManager.IsInRole(userId, roleName))
+            {
+            
+                UserManager.AddToRole(userId, roleName);
+                return RedirectToAction("UserRolesDetails", "Users", new { Id = userId });
+                
+            }
+            
+            return RedirectToAction("UserRolesDetails");
+        }
+        public ActionResult RemoveFromRole(string userId,string roleName)
+        {
 
+            
+            
+            UserManager.RemoveFromRole(userId, roleName);
+            //UserManager.AddToRole(userId, "User");
+
+            //TempData["Success"] = "Roles Assigned Successfully";
+            return RedirectToAction("UserRolesDetails", "Users", new { Id = userId });
+        }
 
 
         //public PartialViewResult UsersList()

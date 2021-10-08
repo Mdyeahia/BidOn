@@ -46,6 +46,12 @@ namespace BidOn.Service
                 .ToList();
 
         }
+        public List<Comment> TotalComments()
+        {
+            BidOnContext context = new BidOnContext();
+
+            return context.Comments.ToList();
+        }
         public int? RatingAverage(int entityId, int recordId)
         {
             BidOnContext context = new BidOnContext();

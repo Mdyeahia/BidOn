@@ -1,0 +1,125 @@
+﻿@model BidOn.Web.ViewModels.UserDetailsViewModel
+
+@if (Model != null)
+{
+    if (Model.UserRoles != null && Model.UserRoles.Count > 0)
+    {
+        <table id="RoleAssignedTable">
+            <thead>
+                <tr>
+                    <th scope="col">Current User Roles</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+                @foreach (var roles in Model.UserRoles)
+                {
+                    <tr>
+                        <td>@roles.Name</td>
+                        <td>
+
+                            <button type="button" class="DeleteBtn btn btn-danger" data-id="@roles.Name">Delete</button>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+
+    }
+    <thead>
+        <tr>
+
+
+            <th scope="col">Assign User Roles</th>
+
+            <th>
+                <form id="AuctionControlForm">
+                    <div class="input-group">
+                        @if (Model.AvailableRoles != null && Model.AvailableRoles.Count() > 0)
+                        {
+                            <select class="form-control mr-1" name="roleId" id="selectRoleId">
+                                <option value="0" disabled selected>
+                                    Select Role
+                                </option>
+                                @foreach (var role in Model.AvailableRoles)
+                                {
+
+                                    <option value="@role.Name">
+                                        @role.Name
+                                    </option>
+
+                                }
+                            </select>
+
+                        }
+                        <button id="assignRolesbtn" class="action-btn btn btn-success mr-1" type="button"> Assign</button>
+
+                    </div>
+                </form>
+            </th>
+        </tr>
+    </thead>
+    <input type="hidden" id="userid"value="@Model.userId" />
+}
+
+<script>
+    $(".DeleteBtn").click(function () {
+        $.ajax({
+
+            url: "@Url.Action("RemoveFromRole", "Users")",
+            data: {
+
+                userId: $("#userid").val(),
+                roleName: $(this).attr('data-id'),
+            }
+
+        })
+            .done(function (response) {
+
+
+                $("#response-holder").html(response);
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+
+    });
+
+    $("#assignRolesbtn").click(function () {
+        $.ajax({
+            type:"post",
+            url: "@Url.Action("AssignRole", "Users")",
+            data: {
+
+                userId: $("#userid").val(),
+                roleName: $("#selectRoleId").val(),
+            }
+
+        })
+            .done(function (response) {
+
+                $("#response-holder").html(response);
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+
+    });
+    @*function ReloadListing() {
+        $.ajax({
+            method:"Get",
+            url: @Url.Action("UserRolesDetails","Users",new { Id=Model.User.Id})"
+           
+        })
+        .done(function (response) {
+            $("#citylistingArea").html(response);
+        })
+    }*@
+
+</script>

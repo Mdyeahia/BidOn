@@ -3,34 +3,116 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
 }
-
-    <h1 class="display-4">Hello, @User.Identity.Name</h1>
-    <p class="lead">Welcome to BidOn </p>
-    <hr class="my-4">
-    <p>Total count of deshboard property</p>
-    <div class="container mt-5 mb-3">
-        <div class="row">
-            <div class="col-lg-3 bg-light" style="margin: 0 8px 8px 0 ">
-                <h1 class="text-center mt-4">@Model.BidOnUserCount</h1>
-                <div class="mt-5 bg-warning">
-                    <h3 class="heading text-center">Users</h3>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<h1 class="display-4">Hello, @User.Identity.Name</h1>
+<p class="lead">Welcome to BidOn </p>
+<hr class="my-4">
+<div class="container mt-5 mb-3">
+    <div class="row">
+        <div class="col-xl-4 col-sm-6 col-12">
+            <div class="card bg-light ">
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="media d-flex">
+                            <div class="align-self-center">
+                                <i class="icon-pencil primary font-large-2 float-left"></i>
+                            </div>
+                            <div class="media-body text-left">
+                                <h3>@Model.Auctions.Count</h3>
+                                <a class="stretched-link" href="@Url.Action("Index","Users")">Auctions</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-3 bg-light" style="margin: 0 8px 8px 0 ">
-                <h1 class="text-center mt-4">@Model.Auctions.Count()</h1>
-                <div class="mt-5 bg-warning">
-                    <h3 class="heading text-center">Auctions</h3>
+        </div>
+        <div class="col-xl-4 col-sm-6 col-12">
+            <div class="card bg-light ">
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="media d-flex">
+                            <div class="align-self-center">
+                                <i class="icon-pencil primary font-large-2 float-left"></i>
+                            </div>
+                            <div class="media-body text-left">
+                                <h3>@Model.Categories.Count</h3>
+                                <a class="stretched-link" href="@Url.Action("Index","Category")">Categories</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-3 bg-light" style="margin: 0 0 8px 0">
-                <h1 class="text-center mt-4">@Model.Bids.Count()</h1>
-                <div class="mt-5 bg-warning">
-                    <h3 class="heading text-center">Bids</h3>
+        </div>
+        <div class="col-xl-4 col-sm-6 col-12">
+            <div class="card bg-light ">
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="media d-flex">
+                            <div class="align-self-center">
+                                <i class="icon-pencil primary font-large-2 float-left"></i>
+                            </div>
+                            <div class="media-body text-left">
+                                <h3>@Model.BidOnUserCount</h3>
+                                <a class="stretched-link" href="@Url.Action("Index","Users")">Users</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
+        </div>
+        <div class="col-xl-4 col-sm-6 col-12">
+            <div class="card bg-light ">
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="media d-flex">
+                            <div class="align-self-center">
+                                <i class="icon-pencil primary font-large-2 float-left"></i>
+                            </div>
+                            <div class="media-body text-left">
+                                <h3>@Model.Bids.Count</h3>
+                                <a class="stretched-link" href="@Url.Action("Index","Users")">Bids</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6 col-12">
+            <div class="card bg-light ">
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="media d-flex">
+                            <div class="align-self-center">
+                                <i class="icon-pencil primary font-large-2 float-left"></i>
+                            </div>
+                            <div class="media-body text-left">
+                                <h3>@Model.BidOnRoles.Count</h3>
+                                <a class="stretched-link" href="@Url.Action("RoleIndex","Users")">Roles</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6 col-12">
+            <div class="card bg-light ">
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="media d-flex">
+                            <div class="align-self-center">
+                                <i class="icon-pencil primary font-large-2 float-left"></i>
+                            </div>
+                            <div class="media-body text-left">
+                                <h3>@Model.BidOnComment.Count</h3>
+                                <a class="stretched-link" href="@Url.Action("RoleIndex","Users")">Comments</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 
 
 
